@@ -1,7 +1,7 @@
 script_name("Emergency Services Overhaul")
 script_description("Многофункциональный скрипт для привнесения иммерсивности при отыгрыше экстренных служб")
 script_author("Weisez~")
-script_version("v1.2 MDC extended p1")
+script_version("v1.3 MDC extended p2")
 
 math.randomseed(os.time())
 
@@ -89,83 +89,84 @@ local currentUnit = "" -- юнит устанавливается через /setunit
 local esoHelpOpen = false
 local esoHelpTab  = 1
 
--- ==================== PERSISTENT CALLSIGNS ====================
+-- ==================== PERSISTENT CALLSIGNS (v1.3 -- функция пока что отключена, массив оставляю на всякий случай ====================
 local DEFAULT_CALLSIGNS = {
 	-- LVPD
-	[429] = "UTILITY 1 | LV-ES",
-	[430] = "UTILITY 2 | LV-ES",
-	[431] = "3A10 | LV-ES",
-	[432] = "3A11 | LV-ES",
-	[433] = "3A12 | LV-ES",
-	[423] = "3A13 | LV-ES",
-	[422] = "3A14 | LV-ES",
-	[421] = "3A15 | LV-ES",
-	[420] = "3A16 | LV-ES",
-	[419] = "3H99 | LV-ES",
-	[434] = "3S01 | LV-ES",
-	[435] = "3S02 | LV-ES",
-	[436] = "3S03 | LV-ES",
-	[437] = "3S04 | LV-ES",
-	[418] = "3S05 | LV-ES",
-	[424] = "3M30 | LV-ES",
-	[425] = "3M31 | LV-ES",
-	[426] = "3M32 | LV-ES",
-	[427] = "3M33 | LV-ES",
-	[428] = "3M34 | LV-ES",
-	[415] = "TACTICAL 3 | LV-ES",	
-	[416] = "SPECIAL 1 | LV-ES",
-	[417] = "SPECIAL 2 | LV-ES",
-	[438] = "SKYHAWK 3",
+	[2000] = "ESO"
+	-- [429] = "UTILITY 1 | LV-ES",
+	-- [430] = "UTILITY 2 | LV-ES",
+	-- [431] = "3A10 | LV-ES",
+	-- [432] = "3A11 | LV-ES",
+	-- [433] = "3A12 | LV-ES",
+	-- [423] = "3A13 | LV-ES",
+	-- [422] = "3A14 | LV-ES",
+	-- [421] = "3A15 | LV-ES",
+	-- [420] = "3A16 | LV-ES",
+	-- [419] = "3H99 | LV-ES",
+	-- [434] = "3S01 | LV-ES",
+	-- [435] = "3S02 | LV-ES",
+	-- [436] = "3S03 | LV-ES",
+	-- [437] = "3S04 | LV-ES",
+	-- [418] = "3S05 | LV-ES",
+	-- [424] = "3M30 | LV-ES",
+	-- [425] = "3M31 | LV-ES",
+	-- [426] = "3M32 | LV-ES",
+	-- [427] = "3M33 | LV-ES",
+	-- [428] = "3M34 | LV-ES",
+	-- [415] = "TACTICAL 3 | LV-ES",	
+	-- [416] = "SPECIAL 1 | LV-ES",
+	-- [417] = "SPECIAL 2 | LV-ES",
+	-- [438] = "SKYHAWK 3",
 	--LSPD
-	[389] = "UTILITY 1 | LS-ES",
-	[388] = "UTILITY 2 | LS-ES",
-	[387] = "1A10 | LS-ES",
-	[386] = "1A11 | LS-ES",
-	[385] = "1A12 | LS-ES",
-	[384] = "1A13 | LS-ES",
-	[383] = "1A14 | LS-ES",
-	[382] = "1A15 | LS-ES",
-	[381] = "1A16 | LS-ES",
-	[375] = "1H99 | LS-ES",
-	[380] = "1A17 | LS-ES",
-	[379] = "1A18 | LS-ES",
-	[378] = "1A19 | LS-ES",
-	[377] = "1A20 | LS-ES",
-	[376] = "1A21 | LS-ES",
-	[374] = "1M30 | LS-ES",
-	[373] = "1M31 | LS-ES",
-	[372] = "1M32 | LS-ES",
-	[371] = "1M33 | LS-ES",
-	[370] = "1M34 | LS-ES",
-	[369] = "TACTICAL 1 | LV-ES",	
-	[367] = "SPECIAL 1 | LS-ES",
-	[368] = "SPECIAL 2 | LS-ES",
-	[390] = "SKYHAWK 1",
+	-- [389] = "UTILITY 1 | LS-ES",
+	-- [388] = "UTILITY 2 | LS-ES",
+	-- [387] = "1A10 | LS-ES",
+	-- [386] = "1A11 | LS-ES",
+	-- [385] = "1A12 | LS-ES",
+	-- [384] = "1A13 | LS-ES",
+	-- [383] = "1A14 | LS-ES",
+	-- [382] = "1A15 | LS-ES",
+	-- [381] = "1A16 | LS-ES",
+	-- [375] = "1H99 | LS-ES",
+	-- [380] = "1A17 | LS-ES",
+	-- [379] = "1A18 | LS-ES",
+	-- [378] = "1A19 | LS-ES",
+	-- [377] = "1A20 | LS-ES",
+	-- [376] = "1A21 | LS-ES",
+	-- [374] = "1M30 | LS-ES",
+	-- [373] = "1M31 | LS-ES",
+	-- [372] = "1M32 | LS-ES",
+	-- [371] = "1M33 | LS-ES",
+	-- [370] = "1M34 | LS-ES",
+	-- [369] = "TACTICAL 1 | LV-ES",	
+	-- [367] = "SPECIAL 1 | LS-ES",
+	-- [368] = "SPECIAL 2 | LS-ES",
+	-- [390] = "SKYHAWK 1",
 	--SFPD
-	[412] = "UTILITY 1 | SF-ES",
-	[413] = "UTILITY 2 | SF-ES",
-	[411] = "2A10 | SF-ES",
-	[410] = "2A11 | SF-ES",
-	[409] = "2A12 | SF-ES",
-	[408] = "2A13 | SF-ES",
-	[407] = "2A14 | SF-ES",
-	[406] = "2A15 | SF-ES",
-	[405] = "2A16 | SF-ES",
-	[399] = "2H99 | SF-ES",
-	[404] = "2A17 | SF-ES",
-	[403] = "2A18 | SF-ES",
-	[402] = "2A19 | SF-ES",
-	[401] = "2A20 | SF-ES",
-	[400] = "2A21 | SF-ES",
-	[398] = "2M30 | SF-ES",
-	[397] = "2M31 | SF-ES",
-	[396] = "2M32 | SF-ES",
-	[395] = "2M33 | SF-ES",
-	[394] = "2M34 | SF-ES",
-	[393] = "TACTICAL 1 | SF-ES",	
-	[391] = "SPECIAL 1 | SF-ES",
-	[392] = "SPECIAL 2 | SF-ES",
-	[414] = "SKYHAWK 2"
+	-- [412] = "UTILITY 1 | SF-ES",
+	-- [413] = "UTILITY 2 | SF-ES",
+	-- [411] = "2A10 | SF-ES",
+	-- [410] = "2A11 | SF-ES",
+	-- [409] = "2A12 | SF-ES",
+	-- [408] = "2A13 | SF-ES",
+	-- [407] = "2A14 | SF-ES",
+	-- [406] = "2A15 | SF-ES",
+	-- [405] = "2A16 | SF-ES",
+	-- [399] = "2H99 | SF-ES",
+	-- [404] = "2A17 | SF-ES",
+	-- [403] = "2A18 | SF-ES",
+	-- [402] = "2A19 | SF-ES",
+	-- [401] = "2A20 | SF-ES",
+	-- [400] = "2A21 | SF-ES",
+	-- [398] = "2M30 | SF-ES",
+	-- [397] = "2M31 | SF-ES",
+	-- [396] = "2M32 | SF-ES",
+	-- [395] = "2M33 | SF-ES",
+	-- [394] = "2M34 | SF-ES",
+	-- [393] = "TACTICAL 1 | SF-ES",	
+	-- [391] = "SPECIAL 1 | SF-ES",
+	-- [392] = "SPECIAL 2 | SF-ES",
+	-- [414] = "SKYHAWK 2"
 }
 
 local userOverriddenCallsigns = {}
@@ -308,10 +309,11 @@ function main()
                 activeCallsigns[sampVehicleId] = nil
             end
             if DEFAULT_CALLSIGNS[sampVehicleId] then
-                createLocalCallsign(sampVehicleId, DEFAULT_CALLSIGNS[sampVehicleId])
-                sampSendChat("/n #VSIGN# " .. sampVehicleId .. " | " .. DEFAULT_CALLSIGNS[sampVehicleId])
+                -- createLocalCallsign(sampVehicleId, DEFAULT_CALLSIGNS[sampVehicleId])
+                -- sampSendChat("/n #VSIGN# " .. sampVehicleId .. " | " .. DEFAULT_CALLSIGNS[sampVehicleId])
                 sampAddChatMessage("[ESO] Callsign #" .. sampVehicleId .. " reset to default: " .. DEFAULT_CALLSIGNS[sampVehicleId], -1)
             else
+				sampDestroy3dText(sampVehicleId)
                 sampAddChatMessage("[ESO] Каллсигн #" .. sampVehicleId .. " очищен. Дефолтный для этой машины не задан.", -1)
             end
             return
@@ -604,36 +606,37 @@ megaphoneContexts = {
         end
     end)
 
--- ==================== дефолтные VSIGN ====================
-    lua_thread.create(function()
-        wait(3000)
-        while true do
-            local allVehIds = {}
-            for vehId in pairs(DEFAULT_CALLSIGNS) do allVehIds[vehId] = true end
-            for vehId in pairs(vehicleSignRegistry) do allVehIds[vehId] = true end
+-- ==================== дефолтные VSIGN (v1.3 -- убрано из-за обновления на сервере, айдишники автомобилей часто сбиваются ====================
+-- ==================== а возможности быстро отслеживать изменения - нет :( ====================
+    -- lua_thread.create(function()
+        -- wait(3000)
+        -- while true do
+            -- local allVehIds = {}
+            -- for vehId in pairs(DEFAULT_CALLSIGNS) do allVehIds[vehId] = true end
+            -- for vehId in pairs(vehicleSignRegistry) do allVehIds[vehId] = true end
 
-            for vehId in pairs(allVehIds) do
-                local success, ok, carHandle = pcall(sampGetCarHandleBySampVehicleId, vehId)
-                if not success then ok = false; carHandle = nil end
-                if ok and carHandle and carHandle ~= 0 then
-                    local wantedSign = vehicleSignRegistry[vehId]
-                        or (not userOverriddenCallsigns[vehId] and DEFAULT_CALLSIGNS[vehId])
-                    if wantedSign then
-                        local active = activeCallsigns[vehId]
-                        if not active or not active.textId or active.string ~= wantedSign then
-                            createLocalCallsign(vehId, wantedSign)
-                        end
-                    end
-                else
-                    if activeCallsigns[vehId] and activeCallsigns[vehId].textId then
-                        sampDelete3dText(activeCallsigns[vehId].textId)
-                        activeCallsigns[vehId] = nil
-                    end
-                end
-            end
-            wait(5000)
-        end
-    end)
+            -- for vehId in pairs(allVehIds) do
+                -- local success, ok, carHandle = pcall(sampGetCarHandleBySampVehicleId, vehId)
+                -- if not success then ok = false; carHandle = nil end
+                -- if ok and carHandle and carHandle ~= 0 then
+                    -- local wantedSign = vehicleSignRegistry[vehId]
+                        -- or (not userOverriddenCallsigns[vehId] and DEFAULT_CALLSIGNS[vehId])
+                    -- if wantedSign then
+                        -- local active = activeCallsigns[vehId]
+                        -- if not active or not active.textId or active.string ~= wantedSign then
+                            -- createLocalCallsign(vehId, wantedSign)
+                        -- end
+                    -- end
+                -- else
+                    -- if activeCallsigns[vehId] and activeCallsigns[vehId].textId then
+                        -- sampDelete3dText(activeCallsigns[vehId].textId)
+                        -- activeCallsigns[vehId] = nil
+                    -- end
+                -- end
+            -- end
+            -- wait(5000)
+        -- end
+    -- end)
 
 -- ==================== WHILE TRUE DO ====================		
     while true do 
@@ -802,6 +805,19 @@ function sampev.onSendChat(text)
 end
 
 -- ==================== ON SERVER MESSAGE ====================
+local function esoExtractNick(s)
+
+    local n = s:match("%a+_%a+%[%d+%]:")
+    if n then return n:match("(.-)%[") end
+
+    n = s:match("^(%a+_%a+)%s")
+    if n then return n:gsub(' ', '_') end
+
+    n = s:match("%]%s+(%a+_%a+)%s")
+    if n then return n:gsub(' ', '_') end
+    return "неизвестно"
+end
+
 function sampev.onServerMessage(color, msg)
     if playerNickname == "" then return {color, msg} end
 
@@ -880,6 +896,8 @@ function sampev.onServerMessage(color, msg)
         sirepAlertText = isRobbery and "ROBBERY IN PROGRESS" or "VEHICLE THEFT IN PROGRESS"
         sirepAlert = 6
         sirepAlertTime = os.clock()
+        local robEvent = lowMsg:find("хранил") and "Диспетчер сообщил об ограблении" or "Диспетчер сообщил об угоне транспорта"
+        officerAddEvent(robEvent .. " | Подозреваемый: " .. esoExtractNick(cleanMsg))
     end
 	
     ---------------- [911] ЗВУКИ ДИСПЕТЧЕРА: ВЫЗОВ 911 ----------------
@@ -894,6 +912,7 @@ function sampev.onServerMessage(color, msg)
             sirepAlert = 5
             sirepAlertText = "NEW 911 CALL  [Y] TO ACCEPT"
             sirepAlertTime = os.clock()
+            officerAddEvent("Поступил вызов в 911 с номера " .. callerId .. " | Диспетчер")
         end
     end
 
@@ -903,6 +922,7 @@ function sampev.onServerMessage(color, msg)
             local randomCuffClick = cuffSounds[math.random(1, #cuffSounds)]
             if randomCuffClick then setAudioStreamState(randomCuffClick, ev.PLAY) end
         end
+        officerAddEvent("Применены спецсредства - наручники | Офицер: " .. esoExtractNick(cleanMsg))
     end
 
     ---------------- [PUTPL] ЗВУКИ PUTPL ----------------
@@ -911,6 +931,7 @@ function sampev.onServerMessage(color, msg)
             local randomPutplClick = putplSounds[math.random(1, #putplSounds)]
             if randomPutplClick then setAudioStreamState(randomPutplClick, ev.PLAY) end
         end
+        officerAddEvent("Подозреваемый помещён в транспорт | Офицер: " .. esoExtractNick(cleanMsg))
     end	
 	
     ---------------- [HOLD] ЗВУКИ HOLD ----------------
@@ -919,6 +940,7 @@ function sampev.onServerMessage(color, msg)
             local randomHoldClick = holdSounds[math.random(1, #holdSounds)]
             if randomHoldClick then setAudioStreamState(randomHoldClick, ev.PLAY) end
         end
+        officerAddEvent("Подозреваемый под контролем | Офицер: " .. esoExtractNick(cleanMsg))
     end
 
     ---------------- [ARREST] ЗВУКИ ARREST ----------------
@@ -927,6 +949,7 @@ function sampev.onServerMessage(color, msg)
             local randomArrestClick = arrestSounds[math.random(1, #arrestSounds)]
             if randomArrestClick then setAudioStreamState(randomArrestClick, ev.PLAY) end
         end
+        officerAddEvent("Подозреваемый передан на станцию | Офицер: " .. esoExtractNick(cleanMsg))
     end
 
     ---------------- [SEARCH] ЗВУКИ SEARCH ----------------
@@ -935,6 +958,7 @@ function sampev.onServerMessage(color, msg)
             local randomSearchClick = searchSounds[math.random(1, #searchSounds)]
             if randomSearchClick then setAudioStreamState(randomSearchClick, ev.PLAY) end
         end
+        officerAddEvent("Произведён осмотр | Офицер: " .. esoExtractNick(cleanMsg))
     end	
 	
     ---------------- [SITREP] ЗВУКИ ПРИ СИТУАЦИЯХ ----------------
@@ -951,6 +975,7 @@ function sampev.onServerMessage(color, msg)
                 sirepAlert = 3
                 sirepAlertText = "CODE 0 OFFICER IN DANGER"
                 sirepAlertTime = os.clock()
+                officerAddEvent("Объявлен код 0 - офицер в опасности | Инициатор: " .. esoExtractNick(cleanMsg))
 
             -- похищение / теракт
             elseif lowMsg:find("похищ") or lowMsg:find("захват") or lowMsg:find("заложник") or lowMsg:find("теракт") or lowMsg:find("hostage") or lowMsg:find("kidnap") then
@@ -961,6 +986,7 @@ function sampev.onServerMessage(color, msg)
 			   sirepAlert = 4
                 sirepAlertText = "HIGH RISK SITUATION"
                 sirepAlertTime = os.clock()
+                officerAddEvent("Объявлен код 0 - заложник/похищение/теракт | Инициатор: " .. esoExtractNick(cleanMsg))
 
             -- КОД 1 — опасная
             elseif lowMsg:find("код 1") or lowMsg:find("code 1") or lowMsg:find("стрельба") or lowMsg:find("перестрелка") or lowMsg:find("открыт огонь") or lowMsg:find("c'1") then
@@ -972,6 +998,7 @@ function sampev.onServerMessage(color, msg)
                 sirepAlert = 2
                 sirepAlertText = "CODE 1 URGENT RESPONSE"
                 sirepAlertTime = os.clock()
+                officerAddEvent("Объявлен код 1 - срочный выезд | Инициатор: " .. esoExtractNick(cleanMsg))
 
             -- КОД 3 — стандартная
             elseif lowMsg:find("код 3") or lowMsg:find("code 3") or lowMsg:find("коду 3") or lowMsg:find("погоня") or lowMsg:find("ограбление") or lowMsg:find("10-66") or lowMsg:find("'66") or lowMsg:find("c'3") or lowMsg:find("10-55") or lowMsg:find("'55") or lowMsg:find("'57") or lowMsg:find("'57") then
@@ -983,6 +1010,7 @@ function sampev.onServerMessage(color, msg)
                 sirepAlert = 1
                 sirepAlertText = "CODE 3 EMERGENCY RESPONSE"
                 sirepAlertTime = os.clock()
+                officerAddEvent("Объявлен код 3 - ситуация на смене | Инициатор: " .. esoExtractNick(cleanMsg))
             end
             
         end
@@ -1916,7 +1944,7 @@ lua_thread.create(function()
             end
         end
 
-        if isKeyJustPressed(0xBD)  -- VK_OEM_MINUS (клавиша "-") -- поменяйте в случае необходимости.
+        if isKeyJustPressed(0xBD)  -- VK_OEM_MINUS (клавиша "-")
             and isCharInAnyCar(PLAYER_PED)
             and not sampIsChatInputActive()
             and not isSampfuncsConsoleActive()
@@ -2231,7 +2259,6 @@ local function mdcRenderWindow()
             imgui.Spacing()
         end
 
-        -- ---- FOOTER ----
         local elapsed   = os.clock() - mdcData.timestamp
         local footerStr = string.format("SCAN: +%.1fs AGO  |  [-] RESCAN  [DEL] CLOSE", elapsed)
         local footerW   = imgui.CalcTextSize(footerStr).x
@@ -2262,6 +2289,2181 @@ local mdcUI = imgui.OnFrame(
 )
 mdcUI.LockPlayer = false
 mdcUI.HideCursor = true
+
+-- ¦           СИСТЕМА НАСТРОЕК / ДАННЫХ  (.ini)             ¦
+
+local ESO_BASE_DIR      = getWorkingDirectory() .. "\\Immersive Siren\\config\\"
+local ESO_DATA_DIR      = ESO_BASE_DIR
+local ESO_SETTINGS_FILE = ESO_BASE_DIR .. "settings.ini"
+local ESO_OFFICER_FILE  = ESO_BASE_DIR .. "officer.ini"
+local ESO_UOF_DIR       = ""
+local ESO_ARREST_DIR    = ""
+local ESO_SITU_DIR      = ""
+
+local function ensureDir(path)
+    local lfs = require 'lfs'
+    local p = path:gsub("[\\/]+$", "")
+    if p == "" then return end
+    local attr = lfs.attributes(p)
+    if attr and attr.mode == "directory" then return end
+    os.execute('mkdir "' .. p .. '" 2>nul')
+end
+
+local function safeLfsDir(dirPath)
+    local lfs = require 'lfs'
+    ensureDir(dirPath)
+    local p = dirPath:gsub("[\\/]+$", "")
+    local iter, state, init = lfs.dir(p)
+    if iter == nil then
+        return function() return nil end
+    end
+    return iter, state, init
+end
+
+local function esoInitProfileForNick(nick)
+    local safeNick = (nick or "unknown"):gsub("[^%w_%-]", "_")
+    if safeNick == "" then safeNick = "unknown" end
+
+    ESO_DATA_DIR      = ESO_BASE_DIR .. safeNick .. "\\"
+    ESO_SETTINGS_FILE = ESO_DATA_DIR .. "settings.ini"
+    ESO_OFFICER_FILE  = ESO_DATA_DIR .. "officer.ini"
+    ESO_UOF_DIR       = ESO_DATA_DIR .. "uof_reports\\"
+    ESO_ARREST_DIR    = ESO_DATA_DIR .. "arrests_reports\\"
+    ESO_SITU_DIR      = ESO_DATA_DIR .. "situations_reports\\"
+
+    ensureDir(ESO_BASE_DIR)
+    ensureDir(ESO_DATA_DIR)
+    ensureDir(ESO_UOF_DIR)
+    ensureDir(ESO_ARREST_DIR)
+    ensureDir(ESO_SITU_DIR)
+
+    local probe = io.open(ESO_OFFICER_FILE, "r")
+    if probe then probe:close(); return false end
+    return true
+end
+
+local function iniEnsureDir(path)
+    ensureDir(path)
+end
+
+local function iniLoad(filepath)
+    local data = {}
+    local currentSection = "__root__"
+    local f = io.open(filepath, "r")
+    if not f then return data end
+    for line in f:lines() do
+        line = line:match("^%s*(.-)%s*$")
+        if line ~= "" and not line:match("^;") and not line:match("^#") then
+            local sec = line:match("^%[(.-)%]$")
+            if sec then
+                currentSection = sec
+                data[currentSection] = data[currentSection] or {}
+            else
+                local k, v = line:match("^(.-)%s*=%s*(.-)%s*$")
+                if k and k ~= "" then
+                    data[currentSection] = data[currentSection] or {}
+                    if v == "true" then v = true
+                    elseif v == "false" then v = false
+                    elseif tonumber(v) then v = tonumber(v)
+                    end
+                    data[currentSection][k] = v
+                end
+            end
+        end
+    end
+    f:close()
+    return data
+end
+
+local function iniSave(filepath, data)
+    local f = io.open(filepath, "w")
+    if not f then
+        print("[ESO] [INI] Не удалось открыть файл для записи: " .. filepath)
+        return false
+    end
+    if data["__root__"] then
+        for k, v in pairs(data["__root__"]) do
+            f:write(tostring(k) .. "=" .. tostring(v) .. "\n")
+        end
+        f:write("\n")
+    end
+    for sec, kvs in pairs(data) do
+        if sec ~= "__root__" then
+            f:write("[" .. sec .. "]\n")
+            for k, v in pairs(kvs) do
+                f:write(tostring(k) .. "=" .. tostring(v) .. "\n")
+            end
+            f:write("\n")
+        end
+    end
+    f:close()
+    return true
+end
+
+local function ensureDataDir()
+    ensureDir(ESO_BASE_DIR)
+    ensureDir(ESO_DATA_DIR)
+end
+
+local esoSettings = {
+    mdcOsWindowX = -1,
+    mdcOsWindowY = -1,
+    mdcOsLastApp = "home",
+}
+
+local esoOfficerData = {
+    nickname    = "",
+    badgeNumber = "N/A",
+    rank        = "Officer",
+    department  = "N/A",
+    unit        = "N/A",
+    assignment  = "N/A",
+    -- Лог событий (список строк)
+    eventLog = {},
+	-- Доклады
+	uofReports = {},
+    arrestReports = {},
+    situationReports = {},
+}
+
+local function settingsLoad()
+    ensureDataDir()
+    local d = iniLoad(ESO_SETTINGS_FILE)
+    local s = d["settings"] or {}
+    if s.mdcOsWindowX then esoSettings.mdcOsWindowX = s.mdcOsWindowX end
+    if s.mdcOsWindowY then esoSettings.mdcOsWindowY = s.mdcOsWindowY end
+    if s.mdcOsLastApp then esoSettings.mdcOsLastApp = tostring(s.mdcOsLastApp) end
+    print("[ESO] [INI] Настройки загружены.")
+end
+
+local function settingsSave()
+    local d = { settings = {
+        mdcOsWindowX = esoSettings.mdcOsWindowX,
+        mdcOsWindowY = esoSettings.mdcOsWindowY,
+        mdcOsLastApp = esoSettings.mdcOsLastApp,
+    }}
+    iniSave(ESO_SETTINGS_FILE, d)
+end
+
+-- ==================== UOF ====================
+
+local function uofEnsureDir()
+    if ESO_UOF_DIR ~= "" then
+        ensureDir(ESO_UOF_DIR)
+    end
+end
+
+local function uofGenFilename()
+    return ESO_UOF_DIR .. "uof_" .. os.date("%Y%m%d_%H%M%S") .. "_" .. tostring(math.random(1000, 9999)) .. ".ini"
+end
+
+local function uofSaveReport(rep)
+    uofEnsureDir()
+    local filepath = rep._file
+    if not filepath or filepath == "" then
+        filepath = uofGenFilename()
+        rep._file = filepath
+    end
+    local d = {
+        uof = {
+            location      = rep.location      or "",
+            datetime      = rep.datetime      or "",
+            weapon        = rep.weapon        or "",
+            equipment     = rep.equipment     or "",
+            officersCount = rep.officersCount or "",
+            seniorOfficer = rep.seniorOfficer or "",
+            department    = rep.department    or "",
+            unit          = rep.unit          or "",
+            officerBadge  = rep.officerBadge  or "",
+            officerRank   = rep.officerRank   or "",
+            officerNick   = rep.officerNick   or "",
+            details       = string.gsub(rep.details or "", "\n", "\\n"),
+        }
+    }
+    iniSave(filepath, d)
+    print("[ESO] [UOF] Отчёт сохранён: " .. filepath)
+end
+
+local function uofDeleteReport(rep)
+    if rep and rep._file and rep._file ~= "" then
+        os.remove(rep._file)
+        print("[ESO] [UOF] Файл отчёта удалён: " .. rep._file)
+    end
+end
+
+local function uofLoadAllReports(officerIniData)
+    uofEnsureDir()
+    esoOfficerData.uofReports = {}
+
+    local o = officerIniData["officer"] or {}
+    local uofCount = tonumber(o.uofCount) or 0
+    if uofCount > 0 then
+        print("[ESO] [UOF] Найдено " .. uofCount .. " старых отчётов в officer.ini — мигрируем в файлы...")
+        for i = 1, uofCount do
+            local u = officerIniData["uof_" .. i]
+            if u then
+                local rep = {
+                    location      = tostring(u.location      or ""),
+                    datetime      = tostring(u.datetime      or ""),
+                    weapon        = tostring(u.weapon        or ""),
+                    equipment     = tostring(u.equipment     or ""),
+                    officersCount = tostring(u.officersCount or ""),
+                    seniorOfficer = tostring(u.seniorOfficer or ""),
+                    department    = tostring(u.department    or ""),
+                    unit          = tostring(u.unit          or ""),
+                    officerBadge  = tostring(u.officerBadge  or ""),
+                    officerRank   = tostring(u.officerRank   or ""),
+                    officerNick   = tostring(u.officerNick   or ""),
+                    details       = string.gsub(tostring(u.details or ""), "\\n", "\n"),
+                    _file         = "",
+                }
+                rep._file = ESO_UOF_DIR .. "uof_migrated_" .. string.format("%03d", i) .. ".ini"
+                uofSaveReport(rep)
+                table.insert(esoOfficerData.uofReports, rep)
+            end
+        end
+    end
+
+    local lfs = require 'lfs'
+    local loadedFiles = {}
+    for _, r in ipairs(esoOfficerData.uofReports) do
+        loadedFiles[r._file] = true
+    end
+    ensureDir(ESO_UOF_DIR)
+    for filename in safeLfsDir(ESO_UOF_DIR) do
+        if filename:match("^uof_.*%.ini$") then
+            local fullPath = ESO_UOF_DIR .. filename
+            if not loadedFiles[fullPath] then
+                local d = iniLoad(fullPath)
+                local u = d["uof"]
+                if u then
+                    local rep = {
+                        location      = tostring(u.location      or ""),
+                        datetime      = tostring(u.datetime      or ""),
+                        weapon        = tostring(u.weapon        or ""),
+                        equipment     = tostring(u.equipment     or ""),
+                        officersCount = tostring(u.officersCount or ""),
+                        seniorOfficer = tostring(u.seniorOfficer or ""),
+                        department    = tostring(u.department    or ""),
+                        unit          = tostring(u.unit          or ""),
+                        officerBadge  = tostring(u.officerBadge  or ""),
+                        officerRank   = tostring(u.officerRank   or ""),
+                        officerNick   = tostring(u.officerNick   or ""),
+                        details       = string.gsub(tostring(u.details or ""), "\\n", "\n"),
+                        _file         = fullPath,
+                    }
+                    table.insert(esoOfficerData.uofReports, rep)
+                end
+            end
+        end
+    end
+
+    table.sort(esoOfficerData.uofReports, function(a, b)
+        local fa = (a._file or ""):match("([^\\]+)$") or ""
+        local fb = (b._file or ""):match("([^\\]+)$") or ""
+        return fa > fb
+    end)
+
+    print("[ESO] [UOF] Загружено отчётов: " .. #esoOfficerData.uofReports)
+end
+
+-- ==================== ARRESTS: ОТДЕЛЬНЫЕ ФАЙЛЫ ====================
+
+local function arrestEnsureDir()
+    if ESO_ARREST_DIR ~= "" then ensureDir(ESO_ARREST_DIR) end
+end
+
+local function arrestGenFilename()
+    return ESO_ARREST_DIR .. "arrest_" .. os.date("%Y%m%d_%H%M%S") .. "_" .. tostring(math.random(1000, 9999)) .. ".ini"
+end
+
+local function arrestSaveReport(rep)
+    arrestEnsureDir()
+    local filepath = rep._file
+    if not filepath or filepath == "" then
+        filepath = arrestGenFilename()
+        rep._file = filepath
+    end
+    local d = {
+        arrest = {
+            suspectName  = rep.suspectName  or "",
+            datetime     = rep.datetime     or "",
+            charges      = rep.charges      or "",
+            location     = rep.location     or "",
+            forceUsed    = rep.forceUsed    or "",
+            witnesses    = rep.witnesses    or "",
+            details      = string.gsub(rep.details or "", "\n", "\\n"),
+            department   = rep.department   or "",
+            unit         = rep.unit         or "",
+            officerBadge = rep.officerBadge or "",
+            officerRank  = rep.officerRank  or "",
+            officerNick  = rep.officerNick  or "",
+        }
+    }
+    iniSave(filepath, d)
+    print("[ESO] [ARREST] Отчёт сохранён: " .. filepath)
+end
+
+local function arrestDeleteReport(rep)
+    if rep and rep._file and rep._file ~= "" then
+        os.remove(rep._file)
+        print("[ESO] [ARREST] Файл удалён: " .. rep._file)
+    end
+end
+
+local function arrestLoadAllReports()
+    arrestEnsureDir()
+    esoOfficerData.arrestReports = {}
+    local lfs = require 'lfs'
+    ensureDir(ESO_ARREST_DIR)
+    for filename in safeLfsDir(ESO_ARREST_DIR) do
+        if filename:match("^arrest_.*%.ini$") then
+            local fullPath = ESO_ARREST_DIR .. filename
+            local d = iniLoad(fullPath)
+            local u = d["arrest"]
+            if u then
+                local rep = {
+                    suspectName  = tostring(u.suspectName  or ""),
+                    datetime     = tostring(u.datetime     or ""),
+                    charges      = tostring(u.charges      or ""),
+                    location     = tostring(u.location     or ""),
+                    forceUsed    = tostring(u.forceUsed    or ""),
+                    witnesses    = tostring(u.witnesses    or ""),
+                    details      = string.gsub(tostring(u.details or ""), "\\n", "\n"),
+                    department   = tostring(u.department   or ""),
+                    unit         = tostring(u.unit         or ""),
+                    officerBadge = tostring(u.officerBadge or ""),
+                    officerRank  = tostring(u.officerRank  or ""),
+                    officerNick  = tostring(u.officerNick  or ""),
+                    _file        = fullPath,
+                }
+                table.insert(esoOfficerData.arrestReports, rep)
+            end
+        end
+    end
+    table.sort(esoOfficerData.arrestReports, function(a, b)
+        local fa = (a._file or ""):match("([^\\]+)$") or ""
+        local fb = (b._file or ""):match("([^\\]+)$") or ""
+        return fa > fb
+    end)
+    print("[ESO] [ARREST] Загружено отчётов: " .. #esoOfficerData.arrestReports)
+end
+
+-- ==================== SITUATIONS: ОТДЕЛЬНЫЕ ФАЙЛЫ ====================
+
+local function situEnsureDir()
+    if ESO_SITU_DIR ~= "" then ensureDir(ESO_SITU_DIR) end
+end
+
+local function situGenFilename()
+    return ESO_SITU_DIR .. "situation_" .. os.date("%Y%m%d_%H%M%S") .. "_" .. tostring(math.random(1000, 9999)) .. ".ini"
+end
+
+local function situSaveReport(rep)
+    situEnsureDir()
+    local filepath = rep._file
+    if not filepath or filepath == "" then
+        filepath = situGenFilename()
+        rep._file = filepath
+    end
+    local d = {
+        situation = {
+            situationType  = rep.situationType  or "",
+            datetime       = rep.datetime       or "",
+            location       = rep.location       or "",
+            unitsInvolved  = rep.unitsInvolved  or "",
+            outcome        = rep.outcome        or "",
+            casualties     = rep.casualties     or "",
+            details        = string.gsub(rep.details or "", "\n", "\\n"),
+            department     = rep.department     or "",
+            unit           = rep.unit           or "",
+            officerBadge   = rep.officerBadge   or "",
+            officerRank    = rep.officerRank    or "",
+            officerNick    = rep.officerNick    or "",
+        }
+    }
+    iniSave(filepath, d)
+    print("[ESO] [SITU] Отчёт сохранён: " .. filepath)
+end
+
+local function situDeleteReport(rep)
+    if rep and rep._file and rep._file ~= "" then
+        os.remove(rep._file)
+        print("[ESO] [SITU] Файл удалён: " .. rep._file)
+    end
+end
+
+local function situLoadAllReports()
+    situEnsureDir()
+    esoOfficerData.situationReports = {}
+    local lfs = require 'lfs'
+    ensureDir(ESO_SITU_DIR)
+    for filename in safeLfsDir(ESO_SITU_DIR) do
+        if filename:match("^situation_.*%.ini$") then
+            local fullPath = ESO_SITU_DIR .. filename
+            local d = iniLoad(fullPath)
+            local u = d["situation"]
+            if u then
+                local rep = {
+                    situationType  = tostring(u.situationType  or ""),
+                    datetime       = tostring(u.datetime       or ""),
+                    location       = tostring(u.location       or ""),
+                    unitsInvolved  = tostring(u.unitsInvolved  or ""),
+                    outcome        = tostring(u.outcome        or ""),
+                    casualties     = tostring(u.casualties     or ""),
+                    details        = string.gsub(tostring(u.details or ""), "\\n", "\n"),
+                    department     = tostring(u.department     or ""),
+                    unit           = tostring(u.unit           or ""),
+                    officerBadge   = tostring(u.officerBadge   or ""),
+                    officerRank    = tostring(u.officerRank    or ""),
+                    officerNick    = tostring(u.officerNick    or ""),
+                    _file          = fullPath,
+                }
+                table.insert(esoOfficerData.situationReports, rep)
+            end
+        end
+    end
+    table.sort(esoOfficerData.situationReports, function(a, b)
+        local fa = (a._file or ""):match("([^\\]+)$") or ""
+        local fb = (b._file or ""):match("([^\\]+)$") or ""
+        return fa > fb
+    end)
+    print("[ESO] [SITU] Загружено отчётов: " .. #esoOfficerData.situationReports)
+end
+
+-- ==================== КОНЕЦ UOF ====================
+
+local function officerLoad()
+    ensureDataDir()
+    local d = iniLoad(ESO_OFFICER_FILE)
+    local o = d["officer"] or {}
+    if o.badgeNumber then esoOfficerData.badgeNumber = tostring(o.badgeNumber) end
+    if o.rank        then esoOfficerData.rank        = tostring(o.rank) end
+    if o.department  then esoOfficerData.department  = tostring(o.department) end
+    if o.unit        then esoOfficerData.unit        = tostring(o.unit) end
+    if o.assignment  then esoOfficerData.assignment  = tostring(o.assignment) end
+
+    local el = d["eventlog"] or {}
+    esoOfficerData.eventLog = {}
+    for i = 1, 20 do
+        local v = el["e" .. i]
+        if v then table.insert(esoOfficerData.eventLog, tostring(v)) end
+    end
+
+    uofLoadAllReports(d)
+    arrestLoadAllReports()
+    situLoadAllReports()
+
+    print("[ESO] [INI] Данные офицера загружены.")
+end
+
+local function officerSave()
+    local d = {
+        officer = {
+            badgeNumber  = esoOfficerData.badgeNumber,
+            rank         = esoOfficerData.rank,
+            department   = esoOfficerData.department,
+            unit         = esoOfficerData.unit,
+            assignment   = esoOfficerData.assignment,
+        },
+        eventlog = {}
+    }
+    for i, v in ipairs(esoOfficerData.eventLog) do
+        d["eventlog"]["e" .. i] = v
+        if i >= 20 then break end
+    end
+    iniSave(ESO_OFFICER_FILE, d)
+end
+
+function officerAddEvent(text)
+    local timeStr = os.date("%d.%m.%Y - %H:%M")
+    table.insert(esoOfficerData.eventLog, 1, "[" .. timeStr .. "] " .. text)
+    if #esoOfficerData.eventLog > 20 then
+        table.remove(esoOfficerData.eventLog)
+    end
+    officerSave()
+end
+
+lua_thread.create(function()
+    wait(500)
+
+    local myId
+    repeat
+        wait(200)
+        local ok, id = pcall(function()
+            local _, pid = sampGetPlayerIdByCharHandle(PLAYER_PED)
+            return pid
+        end)
+        if ok and type(id) == "number" and id >= 0 then
+            myId = id
+        end
+    until myId ~= nil
+
+    local nick = sampGetPlayerNickname(myId) or "unknown"
+    nick = nick:gsub(" ", "_")
+
+    local isNewProfile = esoInitProfileForNick(nick)
+
+    settingsLoad()
+    officerLoad()
+
+    esoOfficerData.nickname = nick
+
+    if isNewProfile then
+        print("[ESO] НОВЫЙ ПРОФИЛЬ: " .. nick)
+        print("[ESO] Данные профиля не найдены в папке конфига. Установлены дефолтные значения.")
+    else
+        print("[ESO] Профиль считан: " .. nick)
+    end
+end)
+
+
+-- ¦                    MDC OS  CORE                         ¦
+
+local mdcOsOpen       = false
+local mdcOsAlpha      = 0.0
+local mdcOsActiveApp  = nil
+local mdcOsTaskbarTime= ""
+
+local MDC_OS_W = 860
+local MDC_OS_H = 540
+
+local MDC_COL = {
+    bg          = imgui.ImVec4(0.06, 0.07, 0.09, 0.98),
+    header      = imgui.ImVec4(0.08, 0.10, 0.14, 1.00),
+    headerText  = imgui.ImVec4(0.45, 0.72, 1.00, 1.00),
+    taskbar     = imgui.ImVec4(0.04, 0.05, 0.07, 1.00),
+    taskbarText = imgui.ImVec4(0.55, 0.60, 0.68, 1.00),
+    sidebar     = imgui.ImVec4(0.05, 0.06, 0.08, 1.00),
+    appBg       = imgui.ImVec4(0.07, 0.09, 0.11, 1.00),
+    accent      = imgui.ImVec4(0.25, 0.55, 1.00, 1.00),
+    accentDim   = imgui.ImVec4(0.15, 0.25, 0.50, 0.70),
+    textMain    = imgui.ImVec4(0.85, 0.87, 0.90, 1.00),
+    textDim     = imgui.ImVec4(0.38, 0.40, 0.45, 1.00),
+    textLabel   = imgui.ImVec4(0.45, 0.48, 0.54, 1.00),
+    iconBg      = imgui.ImVec4(0.10, 0.13, 0.18, 0.85),
+    iconBgHov   = imgui.ImVec4(0.15, 0.20, 0.32, 0.95),
+    iconBgSel   = imgui.ImVec4(0.20, 0.40, 0.80, 0.80),
+    sep         = imgui.ImVec4(0.14, 0.16, 0.20, 1.00),
+    green       = imgui.ImVec4(0.25, 0.80, 0.40, 1.00),
+    red         = imgui.ImVec4(0.90, 0.25, 0.20, 1.00),
+    yellow      = imgui.ImVec4(1.00, 0.85, 0.20, 1.00),
+    closeBtn    = imgui.ImVec4(0.70, 0.20, 0.20, 0.85),
+    closeBtnHov = imgui.ImVec4(0.90, 0.25, 0.20, 1.00),
+}
+
+local function mdcCol(v4)
+    return imgui.ColorConvertFloat4ToU32(v4)
+end
+
+-- ¦              МОДУЛЬНАЯ СИСТЕМА               ¦
+
+local MDC_APPS = {
+    { id = "home",  label = "HOME",     icon = "[H]" },
+    { id = "about", label = "ABOUT",    icon = "[?]" },
+    -- { id = "cad",   label = "CAD",      icon = "[C]" },
+    -- { id = "veh",   label = "VEH",      icon = "[V]" },
+    -- { id = "fto",   label = "FTO",      icon = "[F]" },
+    -- { id = "penal", label = "PENAL",    icon = "[P]" },
+}
+-- ¦           ПРИЛОЖЕНИЕ: HOME (Информация об офицере)      ¦
+
+local HOME_VIEW_MAIN          = 0
+local HOME_VIEW_UOF_LIST      = 1
+local HOME_VIEW_UOF_READ      = 2
+local HOME_VIEW_UOF_FORM      = 3
+local HOME_VIEW_ARREST_LIST   = 4
+local HOME_VIEW_ARREST_READ   = 5
+local HOME_VIEW_ARREST_FORM   = 6
+local HOME_VIEW_SITU_LIST     = 7
+local HOME_VIEW_SITU_READ     = 8
+local HOME_VIEW_SITU_FORM     = 9
+
+local homeCurrentView    = HOME_VIEW_MAIN
+local homeEditMode       = false
+local homeEditBuf        = {}
+local HOME_FIELDS        = { "badgeNumber", "rank", "department", "unit", "assignment" }
+local HOME_LABELS        = { "BADGE:", "RANK:", "DEPT.:", "UNIT:", "ASSIGN.:" }
+
+-- Стейты для UOF
+local currentUofId = 0
+local uofEditMode  = false
+local uofBuf       = nil
+
+-- Стейты для ARRESTS
+local currentArrestId = 0
+local arrestEditMode  = false
+local arrestBuf       = nil
+
+-- Стейты для SITUATIONS
+local currentSituId = 0
+local situEditMode  = false
+local situBuf       = nil
+
+local function homeInitEditBuf()
+    local ffi = require 'ffi'
+    homeEditBuf = {
+        badgeNumber = imgui.new.char[64](u8(esoOfficerData.badgeNumber)),
+        rank        = imgui.new.char[64](u8(esoOfficerData.rank)),
+        department  = imgui.new.char[64](u8(esoOfficerData.department)),
+        unit        = imgui.new.char[64](u8(esoOfficerData.unit)),
+        assignment  = imgui.new.char[64](u8(esoOfficerData.assignment)),
+    }
+end
+
+local function homeApplyEdit()
+    local ffi = require 'ffi'
+    esoOfficerData.badgeNumber = u8:decode(ffi.string(homeEditBuf.badgeNumber))
+    esoOfficerData.rank        = u8:decode(ffi.string(homeEditBuf.rank))
+    esoOfficerData.department  = u8:decode(ffi.string(homeEditBuf.department))
+    esoOfficerData.unit        = u8:decode(ffi.string(homeEditBuf.unit))
+    esoOfficerData.assignment  = u8:decode(ffi.string(homeEditBuf.assignment))
+    officerSave()
+    homeEditMode = false
+end
+
+local function initUofForm(idx)
+    local ffi = require 'ffi'
+    if not uofBuf then
+        uofBuf = {
+            location = imgui.new.char[128](),
+            datetime = imgui.new.char[64](),
+            weapon = imgui.new.char[128](),
+            equipment = imgui.new.char[128](),
+            officersCount = imgui.new.char[32](),
+            seniorOfficer = imgui.new.char[64](),
+            details = imgui.new.char[2048](),
+        }
+    end
+
+    if idx and esoOfficerData.uofReports[idx] then
+        local r = esoOfficerData.uofReports[idx]
+        ffi.copy(uofBuf.location, u8(r.location))
+        ffi.copy(uofBuf.datetime, u8(r.datetime))
+        ffi.copy(uofBuf.weapon, u8(r.weapon))
+        ffi.copy(uofBuf.equipment, u8(r.equipment))
+        ffi.copy(uofBuf.officersCount, u8(r.officersCount))
+        ffi.copy(uofBuf.seniorOfficer, u8(r.seniorOfficer))
+        ffi.copy(uofBuf.details, u8(r.details))
+        currentUofId = idx
+        uofEditMode = true
+    else
+        ffi.fill(uofBuf.location, 128)
+        ffi.copy(uofBuf.datetime, u8(os.date("%d.%m.%Y - %H:%M")))
+        ffi.fill(uofBuf.weapon, 128)
+        ffi.fill(uofBuf.equipment, 128)
+        ffi.fill(uofBuf.officersCount, 32)
+        ffi.fill(uofBuf.seniorOfficer, 64)
+        ffi.fill(uofBuf.details, 2048)
+        currentUofId = 0
+        uofEditMode = false
+    end
+end
+
+local function initArrestForm(idx)
+    local ffi = require 'ffi'
+    if not arrestBuf then
+        arrestBuf = {
+            suspectName = imgui.new.char[128](),
+            datetime    = imgui.new.char[64](),
+            charges     = imgui.new.char[256](),
+            location    = imgui.new.char[128](),
+            forceUsed   = imgui.new.char[32](),
+            witnesses   = imgui.new.char[128](),
+            details     = imgui.new.char[2048](),
+        }
+    end
+    if idx and esoOfficerData.arrestReports[idx] then
+        local r = esoOfficerData.arrestReports[idx]
+        ffi.copy(arrestBuf.suspectName, u8(r.suspectName))
+        ffi.copy(arrestBuf.datetime,    u8(r.datetime))
+        ffi.copy(arrestBuf.charges,     u8(r.charges))
+        ffi.copy(arrestBuf.location,    u8(r.location))
+        ffi.copy(arrestBuf.forceUsed,   u8(r.forceUsed))
+        ffi.copy(arrestBuf.witnesses,   u8(r.witnesses))
+        ffi.copy(arrestBuf.details,     u8(r.details))
+        currentArrestId = idx
+        arrestEditMode = true
+    else
+        ffi.fill(arrestBuf.suspectName, 128)
+        ffi.copy(arrestBuf.datetime,    u8(os.date("%d.%m.%Y - %H:%M")))
+        ffi.fill(arrestBuf.charges,     256)
+        ffi.fill(arrestBuf.location,    128)
+        ffi.fill(arrestBuf.forceUsed,   32)
+        ffi.fill(arrestBuf.witnesses,   128)
+        ffi.fill(arrestBuf.details,     2048)
+        currentArrestId = 0
+        arrestEditMode = false
+    end
+end
+
+local function initSituForm(idx)
+    local ffi = require 'ffi'
+    if not situBuf then
+        situBuf = {
+            situationType = imgui.new.char[128](),
+            datetime      = imgui.new.char[64](),
+            location      = imgui.new.char[128](),
+            unitsInvolved = imgui.new.char[128](),
+            outcome       = imgui.new.char[128](),
+            casualties    = imgui.new.char[64](),
+            details       = imgui.new.char[2048](),
+        }
+    end
+    if idx and esoOfficerData.situationReports[idx] then
+        local r = esoOfficerData.situationReports[idx]
+        ffi.copy(situBuf.situationType, u8(r.situationType))
+        ffi.copy(situBuf.datetime,      u8(r.datetime))
+        ffi.copy(situBuf.location,      u8(r.location))
+        ffi.copy(situBuf.unitsInvolved, u8(r.unitsInvolved))
+        ffi.copy(situBuf.outcome,       u8(r.outcome))
+        ffi.copy(situBuf.casualties,    u8(r.casualties))
+        ffi.copy(situBuf.details,       u8(r.details))
+        currentSituId = idx
+        situEditMode = true
+    else
+        ffi.fill(situBuf.situationType, 128)
+        ffi.copy(situBuf.datetime,      u8(os.date("%d.%m.%Y - %H:%M")))
+        ffi.fill(situBuf.location,      128)
+        ffi.fill(situBuf.unitsInvolved, 128)
+        ffi.fill(situBuf.outcome,       128)
+        ffi.fill(situBuf.casualties,    64)
+        ffi.fill(situBuf.details,       2048)
+        currentSituId = 0
+        situEditMode = false
+    end
+end
+
+-- =========================== ВИДЫ HOME ===========================
+
+local function mdcRenderHomeMain()
+    local ffi = require 'ffi'
+    local C   = MDC_COL
+
+    if not imgui.BeginChild("##home_scroll", imgui.ImVec2(0, 0), false, imgui.WindowFlags.HorizontalScrollbar) then
+        imgui.EndChild()
+        return
+    end
+    local dl  = imgui.GetWindowDrawList()
+    local ww  = imgui.GetContentRegionAvail().x
+
+    local cardW = math.floor(ww * 0.42)
+    local cardH = 170
+
+    local cp  = imgui.GetCursorScreenPos()
+    dl:AddRectFilled(
+        imgui.ImVec2(cp.x, cp.y),
+        imgui.ImVec2(cp.x + cardW, cp.y + cardH),
+        mdcCol(C.iconBg), 6.0)
+    dl:AddRect(
+        imgui.ImVec2(cp.x, cp.y),
+        imgui.ImVec2(cp.x + cardW, cp.y + cardH),
+        mdcCol(C.accentDim), 6.0, 0, 1.0)
+
+    imgui.BeginGroup()
+    imgui.Dummy(imgui.ImVec2(8, 6))
+
+    local nick = esoOfficerData.nickname
+    local initials = (nick ~= "" and nick:sub(1,1):upper()) or "?"
+    local avatarP = imgui.GetCursorScreenPos()
+    local avatarSz = 40
+    dl:AddRectFilled(
+        imgui.ImVec2(avatarP.x + 10, avatarP.y),
+        imgui.ImVec2(avatarP.x + 10 + avatarSz, avatarP.y + avatarSz),
+        mdcCol(C.accentDim), 4.0)
+    dl:AddRect(
+        imgui.ImVec2(avatarP.x + 10, avatarP.y),
+        imgui.ImVec2(avatarP.x + 10 + avatarSz, avatarP.y + avatarSz),
+        mdcCol(C.accent), 4.0, 0, 1.0)
+
+    local initW = imgui.CalcTextSize(initials).x
+    imgui.SetCursorPos(imgui.ImVec2(imgui.GetCursorPos().x + 10 + (avatarSz - initW) * 0.5, imgui.GetCursorPos().y + 12))
+    imgui.TextColored(C.accent, u8(initials))
+
+    imgui.SetCursorPos(imgui.ImVec2(imgui.GetCursorPos().x + 10 + avatarSz + 8, avatarP.y - cp.y + 4))
+    imgui.TextColored(C.textMain, u8(nick ~= "" and nick:gsub("_", " ") or "— N/A —"))
+
+    imgui.SetCursorScreenPos(imgui.ImVec2(cp.x + 8, cp.y + avatarSz + 14))
+    imgui.Dummy(imgui.ImVec2(4, 4))
+    imgui.SetCursorScreenPos(imgui.ImVec2(cp.x + 8, cp.y + avatarSz + 14))
+
+    if homeEditMode then
+        imgui.TextColored(C.textLabel, u8("BADGE:")) imgui.SameLine()
+        imgui.PushItemWidth(cardW - 80) imgui.InputText("##badge", homeEditBuf.badgeNumber, 64) imgui.PopItemWidth()
+        imgui.TextColored(C.textLabel, u8("RANK:")) imgui.SameLine()
+        imgui.PushItemWidth(cardW - 80) imgui.InputText("##rank", homeEditBuf.rank, 64) imgui.PopItemWidth()
+        imgui.TextColored(C.textLabel, u8("DEPT.:")) imgui.SameLine()
+        imgui.PushItemWidth(cardW - 80) imgui.InputText("##dept", homeEditBuf.department, 64) imgui.PopItemWidth()
+        imgui.TextColored(C.textLabel, u8("UNIT:")) imgui.SameLine()
+        imgui.PushItemWidth(cardW - 80) imgui.InputText("##unit", homeEditBuf.unit, 64) imgui.PopItemWidth()
+        imgui.TextColored(C.textLabel, u8("ASSIGN.:")) imgui.SameLine()
+        imgui.PushItemWidth(cardW - 80) imgui.InputText("##assignment", homeEditBuf.assignment, 64) imgui.PopItemWidth()
+
+        imgui.Spacing()
+        imgui.PushStyleColor(imgui.Col.Button, C.green)
+        if imgui.Button(u8("SAVE##home_save"), imgui.ImVec2(60, 18)) then homeApplyEdit() end
+        imgui.PopStyleColor()
+        imgui.SameLine()
+        imgui.PushStyleColor(imgui.Col.Button, imgui.ImVec4(0.25, 0.25, 0.28, 0.80))
+        if imgui.Button(u8("CANCEL##home_cancel"), imgui.ImVec2(60, 18)) then homeEditMode = false end
+        imgui.PopStyleColor()
+    else
+        local lblX = cp.x + 8
+        local valX = cp.x + 68
+        local function infoRow(lbl, val)
+            local rowY = imgui.GetCursorScreenPos().y
+            imgui.SetCursorScreenPos(imgui.ImVec2(lblX, rowY))
+            imgui.TextColored(C.textLabel, u8(lbl))
+            imgui.SetCursorScreenPos(imgui.ImVec2(valX, rowY))
+            imgui.TextColored(C.textMain, u8(val ~= "" and val or "N/A"))
+        end
+        infoRow("BADGE:", esoOfficerData.badgeNumber)
+        infoRow("RANK:", esoOfficerData.rank)
+        infoRow("DEPT.:", esoOfficerData.department)
+        infoRow("UNIT:", esoOfficerData.unit)
+        infoRow("ASSIGN.:", esoOfficerData.assignment)
+        imgui.SetCursorScreenPos(imgui.ImVec2(lblX, imgui.GetCursorScreenPos().y))
+
+        imgui.Spacing()
+        imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+        if imgui.Button(u8("EDIT##home_edit"), imgui.ImVec2(50, 16)) then
+            homeInitEditBuf()
+            homeEditMode = true
+        end
+        imgui.PopStyleColor()
+    end
+    imgui.EndGroup()
+    imgui.SameLine(cardW + 16)
+
+    -- === ВЕРХНЯЯ ПРАВАЯ: Статистика ===
+    local statW = ww - cardW - 20
+    local statH = cardH
+
+    local sp = imgui.GetCursorScreenPos()
+    dl:AddRectFilled(
+        imgui.ImVec2(sp.x, sp.y),
+        imgui.ImVec2(sp.x + statW, sp.y + statH),
+        mdcCol(C.iconBg), 6.0)
+    dl:AddRect(
+        imgui.ImVec2(sp.x, sp.y),
+        imgui.ImVec2(sp.x + statW, sp.y + statH),
+        mdcCol(C.sep), 6.0, 0, 1.0)
+
+    imgui.BeginGroup()
+    imgui.Dummy(imgui.ImVec2(8, 4))
+    imgui.SetCursorScreenPos(imgui.ImVec2(sp.x + 10, sp.y + 8))
+    imgui.TextColored(C.textLabel, u8("DUTY STATISTICS & REPORTS"))
+    imgui.SetCursorScreenPos(imgui.ImVec2(sp.x + 10, sp.y + 26))
+    imgui.TextColored(C.sep, u8(string.rep("-", 28)))
+
+    -- Интерактивные статбоксы
+    local boxes = {
+        { label = "ARRESTS",    val = tostring(#esoOfficerData.arrestReports),   col = C.accent },
+        { label = "SITUATIONS", val = tostring(#esoOfficerData.situationReports), col = C.yellow },
+        { label = "UOF",        val = tostring(#esoOfficerData.uofReports),       col = C.red },
+    }
+    local boxW = math.floor((statW - 20) / 3) - 4
+    for i, box in ipairs(boxes) do
+        local bx = sp.x + 10 + (i - 1) * (boxW + 4)
+        local by = sp.y + 42
+
+        imgui.SetCursorScreenPos(imgui.ImVec2(bx, by))
+        if imgui.InvisibleButton("btn_" .. box.label, imgui.ImVec2(boxW, 52)) then
+            if box.label == "UOF" then
+                homeCurrentView = HOME_VIEW_UOF_LIST
+            elseif box.label == "ARRESTS" then
+                homeCurrentView = HOME_VIEW_ARREST_LIST
+            elseif box.label == "SITUATIONS" then
+                homeCurrentView = HOME_VIEW_SITU_LIST
+            end
+        end
+
+        local isHovered = imgui.IsItemHovered()
+        local bgAlpha = isHovered and 0.35 or 0.18
+
+        dl:AddRectFilled(
+            imgui.ImVec2(bx, by),
+            imgui.ImVec2(bx + boxW, by + 52),
+            mdcCol(imgui.ImVec4(box.col.x * bgAlpha, box.col.y * bgAlpha, box.col.z * bgAlpha, 0.85)),
+            4.0)
+        dl:AddRect(
+            imgui.ImVec2(bx, by),
+            imgui.ImVec2(bx + boxW, by + 52),
+            mdcCol(imgui.ImVec4(box.col.x, box.col.y, box.col.z, isHovered and 0.8 or 0.40)),
+            4.0, 0, 1.0)
+
+        local valW = imgui.CalcTextSize(box.val).x
+        imgui.SetCursorScreenPos(imgui.ImVec2(bx + (boxW - valW) * 0.5, by + 8))
+        imgui.TextColored(box.col, u8(box.val))
+
+        local lblW = imgui.CalcTextSize(box.label).x
+        imgui.SetCursorScreenPos(imgui.ImVec2(bx + (boxW - lblW) * 0.5, by + 30))
+        imgui.TextColored(C.textDim, u8(box.label))
+    end
+
+    imgui.SetCursorScreenPos(imgui.ImVec2(sp.x + 10, sp.y + 118))
+    imgui.TextColored(C.textDim, u8("Нажмите на соответствующую кнопку для перехода к списку докладов"))
+    imgui.EndGroup()
+
+    imgui.SetCursorScreenPos(imgui.ImVec2(cp.x, cp.y + cardH + 10))
+
+    -- === СРЕДНИЙ БЛОК: Последние доклады ===
+    do
+        local rdl = imgui.GetWindowDrawList()
+
+        local allReports = {}
+        for i, r in ipairs(esoOfficerData.uofReports) do
+            local dept = (r.department and r.department ~= "") and r.department or "N/A"
+            local unit = (r.unit and r.unit ~= "") and r.unit or "N/A"
+            table.insert(allReports, {
+                kind     = "uof",
+                srcIndex = i,
+                datetime = r.datetime or "",
+                title    = string.format("USE OF FORCE REPORT - %s - %s", dept, unit),
+                subtitle = string.format("[%s] Локация: %s | Офицер: %s", r.datetime, r.location, r.seniorOfficer),
+                color    = C.red,
+            })
+        end
+        for i, r in ipairs(esoOfficerData.arrestReports) do
+            local dept = (r.department and r.department ~= "") and r.department or "N/A"
+            local unit = (r.unit and r.unit ~= "") and r.unit or "N/A"
+            table.insert(allReports, {
+                kind     = "arrest",
+                srcIndex = i,
+                datetime = r.datetime or "",
+                title    = string.format("ARREST REPORT - %s - %s | %s", dept, unit, r.suspectName ~= "" and r.suspectName or "N/A"),
+                subtitle = string.format("[%s] Локация: %s", r.datetime, r.location),
+                color    = C.accent,
+            })
+        end
+        for i, r in ipairs(esoOfficerData.situationReports) do
+            local dept = (r.department and r.department ~= "") and r.department or "N/A"
+            local unit = (r.unit and r.unit ~= "") and r.unit or "N/A"
+            local siType = r.situationType ~= "" and r.situationType or "N/A"
+            table.insert(allReports, {
+                kind     = "situ",
+                srcIndex = i,
+                datetime = r.datetime or "",
+                title    = string.format("SITUATION REPORT - %s - %s | %s", dept, unit, siType),
+                subtitle = string.format("[%s] Локация: %s", r.datetime, r.location),
+                color    = C.yellow,
+            })
+        end
+
+        table.sort(allReports, function(a, b) return a.datetime > b.datetime end)
+
+        local recentCount = math.min(3, #allReports)
+        local itemH       = 75
+        local itemGap     = 6
+        local headerH     = 28
+        local footerPad   = 8
+        local innerH      = recentCount > 0 and (recentCount * (itemH + itemGap) - itemGap) or 32
+        local blockH      = headerH + innerH + footerPad
+        local itemW2      = ww - 24
+
+        local blkP = imgui.GetCursorScreenPos()
+
+        -- Фон блока на всю ширину ww
+        rdl:AddRectFilled(
+            imgui.ImVec2(blkP.x, blkP.y),
+            imgui.ImVec2(blkP.x + ww, blkP.y + blockH),
+            mdcCol(C.iconBg), 6.0)
+        rdl:AddRect(
+            imgui.ImVec2(blkP.x, blkP.y),
+            imgui.ImVec2(blkP.x + ww, blkP.y + blockH),
+            mdcCol(C.sep), 6.0, 0, 1.0)
+
+        -- Заголовок блока
+        imgui.SetCursorScreenPos(imgui.ImVec2(blkP.x + 12, blkP.y + 8))
+        imgui.TextColored(C.textLabel, u8("LAST REPORTS"))
+
+        if recentCount == 0 then
+            -- Надпись по центру
+            local emptyTxt = u8("No last reports found")
+            local tw = imgui.CalcTextSize(emptyTxt).x
+            local ty = blkP.y + headerH + (32 - 13) * 0.5
+            imgui.SetCursorScreenPos(imgui.ImVec2(blkP.x + (ww - tw) * 0.5, ty))
+            imgui.TextColored(C.textDim, emptyTxt)
+        else
+            for j = 1, recentCount do
+                local rep = allReports[j]
+                local iy  = blkP.y + headerH + (j - 1) * (itemH + itemGap)
+                local cpI = imgui.ImVec2(blkP.x + 12, iy)
+
+                imgui.SetCursorScreenPos(cpI)
+                if imgui.InvisibleButton("recent_rep_" .. j, imgui.ImVec2(itemW2, itemH)) then
+                    if rep.kind == "uof" then
+                        currentUofId = rep.srcIndex
+                        homeCurrentView = HOME_VIEW_UOF_READ
+                    elseif rep.kind == "arrest" then
+                        currentArrestId = rep.srcIndex
+                        homeCurrentView = HOME_VIEW_ARREST_READ
+                    elseif rep.kind == "situ" then
+                        currentSituId = rep.srcIndex
+                        homeCurrentView = HOME_VIEW_SITU_READ
+                    end
+                end
+
+                local hov   = imgui.IsItemHovered()
+                local bgCol = hov and C.iconBgHov or C.iconBg
+
+                rdl:AddRectFilled(cpI, imgui.ImVec2(cpI.x + itemW2, cpI.y + itemH), mdcCol(bgCol), 4.0)
+                rdl:AddRect(cpI, imgui.ImVec2(cpI.x + itemW2, cpI.y + itemH), mdcCol(C.sep), 4.0, 0, 1.0)
+
+                imgui.SetCursorScreenPos(imgui.ImVec2(cpI.x + 14, cpI.y + 18))
+                imgui.TextColored(rep.color, u8(rep.title))
+
+                imgui.SetCursorScreenPos(imgui.ImVec2(cpI.x + 14, cpI.y + 40))
+                imgui.TextColored(C.textDim, u8(rep.subtitle))
+            end
+        end
+
+        -- Двигаем курсор за блок чтобы EVENT LOG начался сразу под ним
+        imgui.SetCursorScreenPos(imgui.ImVec2(blkP.x, blkP.y + blockH + 8))
+    end
+
+    -- === НИЖНИЙ БЛОК: Лог событий ===
+    imgui.Separator()
+    imgui.Spacing()
+    imgui.TextColored(C.textLabel, u8("EVENT LOG"))
+    imgui.SameLine(ww - 100)
+
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    -- if imgui.Button(u8("[+] TEST ENTRY##homeLog"), imgui.ImVec2(96, 16)) then officerAddEvent("Manual test entry") end
+    imgui.PopStyleColor()
+    imgui.Separator()
+
+    -- Фиксированная высота лога — внутри скроллируемого child растягиваться не нужно
+    local logLineH = 18
+    local logLines = math.max(1, #esoOfficerData.eventLog)
+    local logH = math.min(logLines * logLineH + 8, 120)
+    if imgui.BeginChild("##home_log", imgui.ImVec2(0, logH), false) then
+        if #esoOfficerData.eventLog == 0 then
+            imgui.TextColored(C.textDim, u8("  -- no events logged --"))
+        else
+            for _, ev in ipairs(esoOfficerData.eventLog) do
+                imgui.TextColored(C.textDim, u8("> "))
+                imgui.SameLine()
+                imgui.TextColored(C.textMain, u8(ev))
+            end
+        end
+        imgui.EndChild()
+    end
+
+    imgui.EndChild()  -- ##home_scroll
+end
+
+-- =========================== ВИД UOF: СПИСОК ===========================
+
+local function mdcRenderUofList()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("<- BACK"), imgui.ImVec2(130, 24)) then
+        homeCurrentView = HOME_VIEW_MAIN
+    end
+    imgui.PopStyleColor()
+    
+    imgui.SameLine(ww - 140) 
+    
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("NEW REPORT"), imgui.ImVec2(140, 24)) then
+        initUofForm()
+        homeCurrentView = HOME_VIEW_UOF_FORM
+    end
+    imgui.PopStyleColor()
+
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    local childH = imgui.GetContentRegionAvail().y
+    if imgui.BeginChild("##uof_list", imgui.ImVec2(0, childH), false) then
+        if #esoOfficerData.uofReports == 0 then
+            local txt = u8("Nothing found")
+            local tw = imgui.CalcTextSize(txt).x
+            imgui.SetCursorPosY(childH * 0.4)
+            imgui.SetCursorPosX((ww - tw) * 0.5)
+            imgui.TextColored(C.textDim, txt)
+        else
+            local dl = imgui.GetWindowDrawList()
+            
+            for i, rep in ipairs(esoOfficerData.uofReports) do
+                local itemW = ww - 12
+                local itemH = 75
+                local cp = imgui.GetCursorScreenPos()
+                
+                imgui.SetCursorScreenPos(cp)
+                if imgui.InvisibleButton("uof_rep_id_" .. i, imgui.ImVec2(itemW, itemH)) then
+                    currentUofId = i
+                    homeCurrentView = HOME_VIEW_UOF_READ
+                end
+                
+                local isHovered = imgui.IsItemHovered()
+                local bgCol = isHovered and C.iconBgHov or C.iconBg
+                
+                dl:AddRectFilled(imgui.ImVec2(cp.x, cp.y), imgui.ImVec2(cp.x + itemW, cp.y + itemH), mdcCol(bgCol), 4.0)
+                dl:AddRect(imgui.ImVec2(cp.x, cp.y), imgui.ImVec2(cp.x + itemW, cp.y + itemH), mdcCol(C.sep), 4.0, 0, 1.0)
+                
+                local reportNum = #esoOfficerData.uofReports - i + 1
+                
+                -- ИЗМЕНЕНО: Теперь читаем DEPT и UNIT прямо из объекта доклада (rep), а не из глобального esoOfficerData
+                local dept = (rep.department and rep.department ~= "") and rep.department or "N/A"
+                local unit = (rep.unit and rep.unit ~= "") and rep.unit or "N/A"
+                
+                local titleText = string.format("[#%d] USE OF FORCE REPORT - %s - %s", reportNum, dept, unit)
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x + 14, cp.y + 18))
+                imgui.TextColored(C.accent, u8(titleText))
+                
+                local subtitleText = string.format("[%s] Локация: %s | Офицер: %s", rep.datetime, rep.location, rep.seniorOfficer)
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x + 14, cp.y + 40))
+                imgui.TextColored(C.textDim, u8(subtitleText))
+                
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x, cp.y + itemH + 6))
+            end
+        end
+        imgui.EndChild()
+    end
+end
+
+-- =========================== ВИД UOF: ФОРМА СОЗДАНИЯ/РЕДАКТИРОВАНИЯ ===========================
+
+local function mdcRenderUofForm()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+    local ffi = require 'ffi'
+
+    imgui.TextColored(C.headerText, u8(uofEditMode and "РЕДАКТИРОВАНИЕ ДОКЛАДА UOF" or "НОВЫЙ ДОКЛАД UOF"))
+    imgui.Separator()
+    imgui.Spacing()
+
+    if imgui.BeginChild("##uof_form_child", imgui.ImVec2(0, imgui.GetContentRegionAvail().y - 45), false) then
+        -- Блок 1: Автозаполнение
+        imgui.TextColored(C.accent, u8("ИНФОРМАЦИЯ ОБ ОФИЦЕРЕ"))
+        imgui.TextColored(C.textDim, u8(string.format("Офицер: %s | Жетон: %s | Ранг: %s", esoOfficerData.nickname:gsub("_", " "), esoOfficerData.badgeNumber, esoOfficerData.rank)))
+        imgui.TextColored(C.textDim, u8(string.format("Департамент: %s | Юнит: %s", esoOfficerData.department, esoOfficerData.unit)))
+        
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        -- Блок 2: Ввод данных
+        imgui.TextColored(C.accent, u8("ДЕТАЛИ ИНЦИДЕНТА"))
+        local function inputRow(lbl, buf, size)
+            imgui.TextColored(C.textLabel, u8(lbl))
+            imgui.SameLine(180)
+            imgui.PushItemWidth(ww - 200)
+            imgui.InputText("##" .. lbl, buf, size)
+            imgui.PopItemWidth()
+        end
+
+        inputRow("Локация", uofBuf.location, 128)
+        inputRow("Время и дата", uofBuf.datetime, 64)
+        inputRow("Применяемое оружие", uofBuf.weapon, 128)
+        inputRow("Спецсредства", uofBuf.equipment, 128)
+        inputRow("Кол-во офицеров", uofBuf.officersCount, 32)
+        inputRow("Старший офицер", uofBuf.seniorOfficer, 64)
+
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        -- Блок 3: Описание
+        imgui.TextColored(C.accent, u8("ПОДРОБНОЕ ОПИСАНИЕ СИТУАЦИИ"))
+        imgui.InputTextMultiline("##uof_details", uofBuf.details, 2048, imgui.ImVec2(ww - 15, 120))
+
+        imgui.EndChild()
+    end
+
+    -- Кнопки сохранения
+    imgui.Separator()
+    imgui.Spacing()
+    imgui.PushStyleColor(imgui.Col.Button, C.green)
+    if imgui.Button(u8("СОХРАНИТЬ"), imgui.ImVec2(120, 26)) then
+        local rep = {
+            location = u8:decode(ffi.string(uofBuf.location)),
+            datetime = u8:decode(ffi.string(uofBuf.datetime)),
+            weapon = u8:decode(ffi.string(uofBuf.weapon)),
+            equipment = u8:decode(ffi.string(uofBuf.equipment)),
+            officersCount = u8:decode(ffi.string(uofBuf.officersCount)),
+            seniorOfficer = u8:decode(ffi.string(uofBuf.seniorOfficer)),
+            details = u8:decode(ffi.string(uofBuf.details)),
+			department = esoOfficerData.department,
+			unit = esoOfficerData.unit,
+			officerBadge = esoOfficerData.badgeNumber,
+			officerRank = esoOfficerData.rank,
+			officerNick = esoOfficerData.nickname:gsub("_", " ")
+        }
+        if uofEditMode then
+            -- Сохраняем в тот же файл (переносим _file из старого отчёта)
+            local existing = esoOfficerData.uofReports[currentUofId]
+            if existing and existing._file then
+                rep._file = existing._file
+            end
+            uofSaveReport(rep)
+            esoOfficerData.uofReports[currentUofId] = rep
+        else
+            -- Новый отчёт — создаём новый файл
+            rep._file = ""
+            uofSaveReport(rep)
+            table.insert(esoOfficerData.uofReports, 1, rep)
+        end
+        homeCurrentView = HOME_VIEW_UOF_LIST
+    end
+    imgui.PopStyleColor()
+    imgui.SameLine()
+    imgui.PushStyleColor(imgui.Col.Button, C.closeBtn)
+    if imgui.Button(u8("ОТМЕНА"), imgui.ImVec2(120, 26)) then
+        homeCurrentView = HOME_VIEW_UOF_LIST
+    end
+    imgui.PopStyleColor()
+end
+
+-- =========================== ВИД UOF: ЧТЕНИЕ ДОКЛАДА ===========================
+
+local function mdcRenderUofRead()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+    local rep = esoOfficerData.uofReports[currentUofId]
+
+    if not rep then
+        homeCurrentView = HOME_VIEW_UOF_LIST
+        return
+    end
+
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("<- BACK"), imgui.ImVec2(130, 24)) then
+        homeCurrentView = HOME_VIEW_UOF_LIST
+    end
+    imgui.PopStyleColor()
+    
+    imgui.SameLine(ww - 260)
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("EDIT"), imgui.ImVec2(125, 24)) then
+        initUofForm(currentUofId)
+        homeCurrentView = HOME_VIEW_UOF_FORM
+    end
+    imgui.PopStyleColor()
+    
+    imgui.SameLine()
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("DELETE"), imgui.ImVec2(125, 24)) then
+        local rep = esoOfficerData.uofReports[currentUofId]
+        uofDeleteReport(rep)
+        table.remove(esoOfficerData.uofReports, currentUofId)
+        homeCurrentView = HOME_VIEW_UOF_LIST
+    end
+    imgui.PopStyleColor()
+
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    if imgui.BeginChild("##uof_read_child", imgui.ImVec2(0, 0), false) then
+        local function readRow(lbl, val)
+            imgui.TextColored(C.textLabel, u8(lbl .. ":"))
+            imgui.SameLine(180)
+            imgui.TextColored(C.textMain, u8(val ~= "" and val or "N/A"))
+        end
+
+        -- === ВСТАВЛЯЕМ ЭТОТ БЛОК ПЕРЕД СВОДКОЙ ИНЦИДЕНТА ===
+		imgui.TextColored(C.accent, u8("ИНФОРМАЦИЯ ОБ ОФИЦЕРЕ (НА МОМЕНТ ПОДАЧИ):"))
+		imgui.Spacing()
+
+		local oRank = (rep.officerRank and rep.officerRank ~= "") and rep.officerRank or "N/A"
+		local oName = (rep.officerNick and rep.officerNick ~= "") and rep.officerNick or "N/A"
+		local oBadge = (rep.officerBadge and rep.officerBadge ~= "") and rep.officerBadge or "---"
+
+		imgui.Text(u8(string.format("Офицер: %s %s", oRank, oName)))
+		imgui.Text(u8(string.format("Номер жетона: #%s", oBadge)))
+		imgui.Text(u8(string.format("Подразделение: %s | Юнит: %s", rep.department or "N/A", rep.unit or "N/A")))
+
+		imgui.Spacing()
+		imgui.Separator()
+		imgui.Spacing()
+-- ===================================================
+		
+		imgui.TextColored(C.accent, u8("СВОДКА ИНЦИДЕНТА"))
+        readRow("Время и дата", rep.datetime)
+        readRow("Локация", rep.location)
+        readRow("Старший офицер", rep.seniorOfficer)
+        readRow("Кол-во офицеров", rep.officersCount)
+        readRow("Применяемое оружие", rep.weapon)
+        readRow("Спецсредства", rep.equipment)
+
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("ДЕТАЛИ СИТУАЦИИ"))
+        imgui.TextWrapped(u8(rep.details ~= "" and rep.details or "Нет описания."))
+
+        imgui.EndChild()
+    end
+end
+
+-- =========================== ВИД ARRESTS: СПИСОК ===========================
+
+local function mdcRenderArrestList()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("<- BACK"), imgui.ImVec2(130, 24)) then
+        homeCurrentView = HOME_VIEW_MAIN
+    end
+    imgui.PopStyleColor()
+
+    imgui.SameLine(ww - 140)
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("NEW REPORT"), imgui.ImVec2(140, 24)) then
+        initArrestForm()
+        homeCurrentView = HOME_VIEW_ARREST_FORM
+    end
+    imgui.PopStyleColor()
+
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    local childH = imgui.GetContentRegionAvail().y
+    if imgui.BeginChild("##arrest_list", imgui.ImVec2(0, childH), false) then
+        if #esoOfficerData.arrestReports == 0 then
+            local txt = u8("Ничего не найдено")
+            local tw = imgui.CalcTextSize(txt).x
+            imgui.SetCursorPosY(childH * 0.4)
+            imgui.SetCursorPosX((ww - tw) * 0.5)
+            imgui.TextColored(C.textDim, txt)
+        else
+            local dl = imgui.GetWindowDrawList()
+            for i, rep in ipairs(esoOfficerData.arrestReports) do
+                local itemW = ww - 12
+                local itemH = 75
+                local cp = imgui.GetCursorScreenPos()
+
+                imgui.SetCursorScreenPos(cp)
+                if imgui.InvisibleButton("arrest_rep_id_" .. i, imgui.ImVec2(itemW, itemH)) then
+                    currentArrestId = i
+                    homeCurrentView = HOME_VIEW_ARREST_READ
+                end
+
+                local isHovered = imgui.IsItemHovered()
+                local bgCol = isHovered and C.iconBgHov or C.iconBg
+
+                dl:AddRectFilled(imgui.ImVec2(cp.x, cp.y), imgui.ImVec2(cp.x + itemW, cp.y + itemH), mdcCol(bgCol), 4.0)
+                dl:AddRect(imgui.ImVec2(cp.x, cp.y), imgui.ImVec2(cp.x + itemW, cp.y + itemH), mdcCol(C.sep), 4.0, 0, 1.0)
+
+                local reportNum = #esoOfficerData.arrestReports - i + 1
+                local aDept = (rep.department and rep.department ~= "") and rep.department or "N/A"
+                local aUnit = (rep.unit and rep.unit ~= "") and rep.unit or "N/A"
+                local titleText = string.format("[#%d] ARREST REPORT - %s - %s | %s", reportNum, aDept, aUnit, rep.suspectName ~= "" and rep.suspectName or "N/A")
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x + 14, cp.y + 18))
+                imgui.TextColored(C.accent, u8(titleText))
+
+                local subtitleText = string.format("[%s] Локация: %s", rep.datetime, rep.location)
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x + 14, cp.y + 40))
+                imgui.TextColored(C.textDim, u8(subtitleText))
+
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x, cp.y + itemH + 6))
+            end
+        end
+        imgui.EndChild()
+    end
+end
+
+-- =========================== ВИД ARRESTS: ФОРМА ===========================
+
+local function mdcRenderArrestForm()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+    local ffi = require 'ffi'
+
+    imgui.TextColored(C.headerText, u8(arrestEditMode and "РЕДАКТИРОВАНИЕ ДОКЛАДА ОБ АРЕСТЕ" or "НОВЫЙ ДОКЛАД ОБ АРЕСТЕ"))
+    imgui.Separator()
+    imgui.Spacing()
+
+    if imgui.BeginChild("##arrest_form_child", imgui.ImVec2(0, imgui.GetContentRegionAvail().y - 45), false) then
+        imgui.TextColored(C.accent, u8("ИНФОРМАЦИЯ ОБ ОФИЦЕРЕ"))
+        imgui.TextColored(C.textDim, u8(string.format("Офицер: %s | Жетон: %s | Ранг: %s", esoOfficerData.nickname:gsub("_", " "), esoOfficerData.badgeNumber, esoOfficerData.rank)))
+        imgui.TextColored(C.textDim, u8(string.format("Департамент: %s | Юнит: %s", esoOfficerData.department, esoOfficerData.unit)))
+
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("ДЕТАЛИ ЗАДЕРЖАНИЯ"))
+        local function inputRow(lbl, buf, size)
+            imgui.TextColored(C.textLabel, u8(lbl))
+            imgui.SameLine(180)
+            imgui.PushItemWidth(ww - 200)
+            imgui.InputText("##arrest_" .. lbl, buf, size)
+            imgui.PopItemWidth()
+        end
+
+        inputRow("Задержанный",       arrestBuf.suspectName, 128)
+        inputRow("Дата и время",      arrestBuf.datetime,    64)
+        inputRow("Статья / нарушение",arrestBuf.charges,     256)
+        inputRow("Место задержания",  arrestBuf.location,    128)
+        inputRow("Применение силы",   arrestBuf.forceUsed,   32)
+        inputRow("Свидетели/офицеры", arrestBuf.witnesses,   128)
+
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("ПОДРОБНОЕ ОПИСАНИЕ"))
+        imgui.InputTextMultiline("##arrest_details", arrestBuf.details, 2048, imgui.ImVec2(ww - 15, 120))
+
+        imgui.EndChild()
+    end
+
+    imgui.Separator()
+    imgui.Spacing()
+    imgui.PushStyleColor(imgui.Col.Button, C.green)
+    if imgui.Button(u8("СОХРАНИТЬ"), imgui.ImVec2(120, 26)) then
+        local rep = {
+            suspectName  = u8:decode(ffi.string(arrestBuf.suspectName)),
+            datetime     = u8:decode(ffi.string(arrestBuf.datetime)),
+            charges      = u8:decode(ffi.string(arrestBuf.charges)),
+            location     = u8:decode(ffi.string(arrestBuf.location)),
+            forceUsed    = u8:decode(ffi.string(arrestBuf.forceUsed)),
+            witnesses    = u8:decode(ffi.string(arrestBuf.witnesses)),
+            details      = u8:decode(ffi.string(arrestBuf.details)),
+            department   = esoOfficerData.department,
+            unit         = esoOfficerData.unit,
+            officerBadge = esoOfficerData.badgeNumber,
+            officerRank  = esoOfficerData.rank,
+            officerNick  = esoOfficerData.nickname:gsub("_", " "),
+        }
+        if arrestEditMode then
+            local existing = esoOfficerData.arrestReports[currentArrestId]
+            if existing and existing._file then rep._file = existing._file end
+            arrestSaveReport(rep)
+            esoOfficerData.arrestReports[currentArrestId] = rep
+        else
+            rep._file = ""
+            arrestSaveReport(rep)
+            table.insert(esoOfficerData.arrestReports, 1, rep)
+        end
+        homeCurrentView = HOME_VIEW_ARREST_LIST
+    end
+    imgui.PopStyleColor()
+    imgui.SameLine()
+    imgui.PushStyleColor(imgui.Col.Button, C.closeBtn)
+    if imgui.Button(u8("ОТМЕНА"), imgui.ImVec2(120, 26)) then
+        homeCurrentView = HOME_VIEW_ARREST_LIST
+    end
+    imgui.PopStyleColor()
+end
+
+-- =========================== ВИД ARRESTS: ЧТЕНИЕ ===========================
+
+local function mdcRenderArrestRead()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+    local rep = esoOfficerData.arrestReports[currentArrestId]
+
+    if not rep then homeCurrentView = HOME_VIEW_ARREST_LIST; return end
+
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("<- BACK"), imgui.ImVec2(130, 24)) then
+        homeCurrentView = HOME_VIEW_ARREST_LIST
+    end
+    imgui.PopStyleColor()
+
+    imgui.SameLine(ww - 260)
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("EDIT"), imgui.ImVec2(125, 24)) then
+        initArrestForm(currentArrestId)
+        homeCurrentView = HOME_VIEW_ARREST_FORM
+    end
+    imgui.PopStyleColor()
+
+    imgui.SameLine()
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("DELETE"), imgui.ImVec2(125, 24)) then
+        arrestDeleteReport(rep)
+        table.remove(esoOfficerData.arrestReports, currentArrestId)
+        homeCurrentView = HOME_VIEW_ARREST_LIST
+    end
+    imgui.PopStyleColor()
+
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    if imgui.BeginChild("##arrest_read_child", imgui.ImVec2(0, 0), false) then
+        local function readRow(lbl, val)
+            imgui.TextColored(C.textLabel, u8(lbl .. ":"))
+            imgui.SameLine(180)
+            imgui.TextColored(C.textMain, u8(val ~= "" and val or "N/A"))
+        end
+
+        imgui.TextColored(C.accent, u8("ИНФОРМАЦИЯ ОБ ОФИЦЕРЕ (НА МОМЕНТ ПОДАЧИ):"))
+        imgui.Spacing()
+        imgui.Text(u8(string.format("Офицер: %s %s", rep.officerRank or "N/A", rep.officerNick or "N/A")))
+        imgui.Text(u8(string.format("Номер жетона: #%s", rep.officerBadge or "---")))
+        imgui.Text(u8(string.format("Подразделение: %s | Юнит: %s", rep.department or "N/A", rep.unit or "N/A")))
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("СВОДКА ЗАДЕРЖАНИЯ"))
+        readRow("Дата и время",       rep.datetime)
+        readRow("Задержанный",        rep.suspectName)
+        readRow("Место задержания",   rep.location)
+        readRow("Статья / нарушение", rep.charges)
+        readRow("Применение силы",    rep.forceUsed)
+        readRow("Свидетели/офицеры",  rep.witnesses)
+
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("ОПИСАНИЕ"))
+        imgui.TextWrapped(u8(rep.details ~= "" and rep.details or "Нет описания."))
+
+        imgui.EndChild()
+    end
+end
+
+-- =========================== ВИД SITUATIONS: СПИСОК ===========================
+
+local function mdcRenderSituList()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("<- BACK"), imgui.ImVec2(130, 24)) then
+        homeCurrentView = HOME_VIEW_MAIN
+    end
+    imgui.PopStyleColor()
+
+    imgui.SameLine(ww - 140)
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("NEW REPORT"), imgui.ImVec2(140, 24)) then
+        initSituForm()
+        homeCurrentView = HOME_VIEW_SITU_FORM
+    end
+    imgui.PopStyleColor()
+
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    local childH = imgui.GetContentRegionAvail().y
+    if imgui.BeginChild("##situ_list", imgui.ImVec2(0, childH), false) then
+        if #esoOfficerData.situationReports == 0 then
+            local txt = u8("Ничего не найдено")
+            local tw = imgui.CalcTextSize(txt).x
+            imgui.SetCursorPosY(childH * 0.4)
+            imgui.SetCursorPosX((ww - tw) * 0.5)
+            imgui.TextColored(C.textDim, txt)
+        else
+            local dl = imgui.GetWindowDrawList()
+            for i, rep in ipairs(esoOfficerData.situationReports) do
+                local itemW = ww - 12
+                local itemH = 75
+                local cp = imgui.GetCursorScreenPos()
+
+                imgui.SetCursorScreenPos(cp)
+                if imgui.InvisibleButton("situ_rep_id_" .. i, imgui.ImVec2(itemW, itemH)) then
+                    currentSituId = i
+                    homeCurrentView = HOME_VIEW_SITU_READ
+                end
+
+                local isHovered = imgui.IsItemHovered()
+                local bgCol = isHovered and C.iconBgHov or C.iconBg
+
+                dl:AddRectFilled(imgui.ImVec2(cp.x, cp.y), imgui.ImVec2(cp.x + itemW, cp.y + itemH), mdcCol(bgCol), 4.0)
+                dl:AddRect(imgui.ImVec2(cp.x, cp.y), imgui.ImVec2(cp.x + itemW, cp.y + itemH), mdcCol(C.sep), 4.0, 0, 1.0)
+
+                local reportNum = #esoOfficerData.situationReports - i + 1
+                local sDept = (rep.department and rep.department ~= "") and rep.department or "N/A"
+                local sUnit = (rep.unit and rep.unit ~= "") and rep.unit or "N/A"
+                local siType = rep.situationType ~= "" and rep.situationType or "N/A"
+                local titleText = string.format("[#%d] SITUATION REPORT - %s - %s | %s", reportNum, sDept, sUnit, siType)
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x + 14, cp.y + 18))
+                imgui.TextColored(C.yellow, u8(titleText))
+
+                local subtitleText = string.format("[%s] Локация: %s", rep.datetime, rep.location)
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x + 14, cp.y + 40))
+                imgui.TextColored(C.textDim, u8(subtitleText))
+
+                imgui.SetCursorScreenPos(imgui.ImVec2(cp.x, cp.y + itemH + 6))
+            end
+        end
+        imgui.EndChild()
+    end
+end
+
+-- =========================== ВИД SITUATIONS: ФОРМА ===========================
+
+local function mdcRenderSituForm()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+    local ffi = require 'ffi'
+
+    imgui.TextColored(C.headerText, u8(situEditMode and "РЕДАКТИРОВАНИЕ ДОКЛАДА ОБ ИНЦИДЕНТЕ" or "НОВЫЙ ДОКЛАД ОБ ИНЦИДЕНТЕ"))
+    imgui.Separator()
+    imgui.Spacing()
+
+    if imgui.BeginChild("##situ_form_child", imgui.ImVec2(0, imgui.GetContentRegionAvail().y - 45), false) then
+        imgui.TextColored(C.accent, u8("ИНФОРМАЦИЯ ОБ ОФИЦЕРЕ"))
+        imgui.TextColored(C.textDim, u8(string.format("Офицер: %s | Жетон: %s | Ранг: %s", esoOfficerData.nickname:gsub("_", " "), esoOfficerData.badgeNumber, esoOfficerData.rank)))
+        imgui.TextColored(C.textDim, u8(string.format("Департамент: %s | Юнит: %s", esoOfficerData.department, esoOfficerData.unit)))
+
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("ДЕТАЛИ ИНЦИДЕНТА"))
+        local function inputRow(lbl, buf, size)
+            imgui.TextColored(C.textLabel, u8(lbl))
+            imgui.SameLine(180)
+            imgui.PushItemWidth(ww - 200)
+            imgui.InputText("##situ_" .. lbl, buf, size)
+            imgui.PopItemWidth()
+        end
+
+        inputRow("Тип ситуации",       situBuf.situationType, 128)
+        inputRow("Дата и время",        situBuf.datetime,      64)
+        inputRow("Место",               situBuf.location,      128)
+        inputRow("Задейств. юниты",     situBuf.unitsInvolved, 128)
+        inputRow("Исход",               situBuf.outcome,       128)
+        inputRow("Пострадавшие",        situBuf.casualties,    64)
+
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("ПОДРОБНОЕ ОПИСАНИЕ"))
+        imgui.InputTextMultiline("##situ_details", situBuf.details, 2048, imgui.ImVec2(ww - 15, 120))
+
+        imgui.EndChild()
+    end
+
+    imgui.Separator()
+    imgui.Spacing()
+    imgui.PushStyleColor(imgui.Col.Button, C.green)
+    if imgui.Button(u8("СОХРАНИТЬ"), imgui.ImVec2(120, 26)) then
+        local rep = {
+            situationType = u8:decode(ffi.string(situBuf.situationType)),
+            datetime      = u8:decode(ffi.string(situBuf.datetime)),
+            location      = u8:decode(ffi.string(situBuf.location)),
+            unitsInvolved = u8:decode(ffi.string(situBuf.unitsInvolved)),
+            outcome       = u8:decode(ffi.string(situBuf.outcome)),
+            casualties    = u8:decode(ffi.string(situBuf.casualties)),
+            details       = u8:decode(ffi.string(situBuf.details)),
+            department    = esoOfficerData.department,
+            unit          = esoOfficerData.unit,
+            officerBadge  = esoOfficerData.badgeNumber,
+            officerRank   = esoOfficerData.rank,
+            officerNick   = esoOfficerData.nickname:gsub("_", " "),
+        }
+        if situEditMode then
+            local existing = esoOfficerData.situationReports[currentSituId]
+            if existing and existing._file then rep._file = existing._file end
+            situSaveReport(rep)
+            esoOfficerData.situationReports[currentSituId] = rep
+        else
+            rep._file = ""
+            situSaveReport(rep)
+            table.insert(esoOfficerData.situationReports, 1, rep)
+        end
+        homeCurrentView = HOME_VIEW_SITU_LIST
+    end
+    imgui.PopStyleColor()
+    imgui.SameLine()
+    imgui.PushStyleColor(imgui.Col.Button, C.closeBtn)
+    if imgui.Button(u8("ОТМЕНА"), imgui.ImVec2(120, 26)) then
+        homeCurrentView = HOME_VIEW_SITU_LIST
+    end
+    imgui.PopStyleColor()
+end
+
+-- =========================== ВИД SITUATIONS: ЧТЕНИЕ ===========================
+
+local function mdcRenderSituRead()
+    local C = MDC_COL
+    local ww = imgui.GetContentRegionAvail().x
+    local rep = esoOfficerData.situationReports[currentSituId]
+
+    if not rep then homeCurrentView = HOME_VIEW_SITU_LIST; return end
+
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("<- BACK"), imgui.ImVec2(130, 24)) then
+        homeCurrentView = HOME_VIEW_SITU_LIST
+    end
+    imgui.PopStyleColor()
+
+    imgui.SameLine(ww - 260)
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("EDIT"), imgui.ImVec2(125, 24)) then
+        initSituForm(currentSituId)
+        homeCurrentView = HOME_VIEW_SITU_FORM
+    end
+    imgui.PopStyleColor()
+
+    imgui.SameLine()
+    imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+    if imgui.Button(u8("DELETE"), imgui.ImVec2(125, 24)) then
+        situDeleteReport(rep)
+        table.remove(esoOfficerData.situationReports, currentSituId)
+        homeCurrentView = HOME_VIEW_SITU_LIST
+    end
+    imgui.PopStyleColor()
+
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    if imgui.BeginChild("##situ_read_child", imgui.ImVec2(0, 0), false) then
+        local function readRow(lbl, val)
+            imgui.TextColored(C.textLabel, u8(lbl .. ":"))
+            imgui.SameLine(180)
+            imgui.TextColored(C.textMain, u8(val ~= "" and val or "N/A"))
+        end
+
+        imgui.TextColored(C.accent, u8("ИНФОРМАЦИЯ ОБ ОФИЦЕРЕ (НА МОМЕНТ ПОДАЧИ):"))
+        imgui.Spacing()
+        imgui.Text(u8(string.format("Офицер: %s %s", rep.officerRank or "N/A", rep.officerNick or "N/A")))
+        imgui.Text(u8(string.format("Номер жетона: #%s", rep.officerBadge or "---")))
+        imgui.Text(u8(string.format("Подразделение: %s | Юнит: %s", rep.department or "N/A", rep.unit or "N/A")))
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("СВОДКА ИНЦИДЕНТА"))
+        readRow("Тип ситуации",    rep.situationType)
+        readRow("Дата и время",    rep.datetime)
+        readRow("Место",           rep.location)
+        readRow("Задейств. юниты", rep.unitsInvolved)
+        readRow("Исход",           rep.outcome)
+        readRow("Пострадавшие",    rep.casualties)
+
+        imgui.Spacing()
+        imgui.Separator()
+        imgui.Spacing()
+
+        imgui.TextColored(C.accent, u8("ОПИСАНИЕ"))
+        imgui.TextWrapped(u8(rep.details ~= "" and rep.details or "Нет описания."))
+
+        imgui.EndChild()
+    end
+end
+
+-- =========================== РОУТИНГ ПРИЛОЖЕНИЯ HOME ===========================
+
+local function mdcRenderHome()
+    if homeCurrentView == HOME_VIEW_MAIN then
+        mdcRenderHomeMain()
+    elseif homeCurrentView == HOME_VIEW_UOF_LIST then
+        mdcRenderUofList()
+    elseif homeCurrentView == HOME_VIEW_UOF_FORM then
+        mdcRenderUofForm()
+    elseif homeCurrentView == HOME_VIEW_UOF_READ then
+        mdcRenderUofRead()
+    elseif homeCurrentView == HOME_VIEW_ARREST_LIST then
+        mdcRenderArrestList()
+    elseif homeCurrentView == HOME_VIEW_ARREST_FORM then
+        mdcRenderArrestForm()
+    elseif homeCurrentView == HOME_VIEW_ARREST_READ then
+        mdcRenderArrestRead()
+    elseif homeCurrentView == HOME_VIEW_SITU_LIST then
+        mdcRenderSituList()
+    elseif homeCurrentView == HOME_VIEW_SITU_FORM then
+        mdcRenderSituForm()
+    elseif homeCurrentView == HOME_VIEW_SITU_READ then
+        mdcRenderSituRead()
+    end
+end
+
+-- ¦         ПРИЛОЖЕНИЕ: ABOUT (Информация о скрипте)        ¦
+
+local function mdcRenderAbout()
+    local dl = imgui.GetWindowDrawList()
+    local ww = imgui.GetContentRegionAvail().x
+    local C  = MDC_COL
+
+    imgui.Spacing()
+
+    -- Лого / баннер
+    local bannerH = 36
+    local bp = imgui.GetCursorScreenPos()
+    dl:AddRectFilled(
+        imgui.ImVec2(bp.x, bp.y),
+        imgui.ImVec2(bp.x + ww, bp.y + bannerH),
+        mdcCol(imgui.ImVec4(0.08, 0.13, 0.24, 1.0)), 5.0)
+
+    local titleStr = "ESO  //  EMERGENCY SERVICES OVERHAUL"
+    local tw = imgui.CalcTextSize(titleStr).x
+    imgui.SetCursorScreenPos(imgui.ImVec2(bp.x + (ww - tw) * 0.5, bp.y + 10))
+    imgui.TextColored(C.headerText, u8(titleStr))
+    imgui.Dummy(imgui.ImVec2(0, bannerH + 4))
+
+    -- Инфо-блок
+    local function row(lbl, val, valCol)
+        valCol = valCol or C.textMain
+        imgui.TextColored(C.textLabel, u8(lbl))
+        imgui.SameLine(130)
+        imgui.TextColored(valCol, u8(val))
+    end
+
+    row("Версия:",      "v1.3", C.accent)
+    row("Наименование:",       "MDC extended p2",               C.textMain)
+    row("Статус версии:",   "релиз",    C.textDim)
+    row("Обратная связь:",   "DS: strangelovesendsherregards",    C.textDim)
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    row("Компилятор:",  _VERSION,                C.textDim)
+    row("os.clock():",  string.format("%.1f s",  os.clock()), C.textDim)
+    row("Дата запуска:", os.date("%Y-%m-%d %H:%M"), C.textDim)
+
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    -- Список модулей MDC OS
+    imgui.TextColored(C.textLabel, u8("Зарегистрированные модули борткомпьютера:"))
+    imgui.Spacing()
+    for i, app in ipairs(MDC_APPS) do
+        local bullet = "[" .. i .. "]"
+        imgui.TextColored(C.accentDim, u8(bullet))
+        imgui.SameLine()
+        imgui.TextColored(C.textMain, u8(app.label))
+        imgui.SameLine()
+        imgui.TextColored(C.textDim, u8("  id=" .. app.id))
+    end
+
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+
+    -- Фиче-лист
+    imgui.TextColored(C.textLabel, u8("Планируемые модули:"))
+    imgui.Spacing()
+    local feats = {
+        "[INFO] Информация об офицере, статистика, логи",
+        "[CAD] Диспетчер, обработка вызовов",
+        "[VEH] Расширенная информация об опросе транспорта",
+        "[FTO] Справочник и чек-лист для офицера академии",
+        "[PENAL] Сборник УК, АК, ПК",
+        -- "[REPORT] Генератор отчётов об инцидентах, арестах, штрафах",
+        "[ABOUT] Информация о скрипте",
+    }
+    for _, f in ipairs(feats) do
+        imgui.TextColored(C.accent, u8("> "))
+        imgui.SameLine()
+        imgui.TextColored(C.textMain, u8(f))
+    end
+	imgui.Spacing()
+    imgui.TextColored(C.textLabel, u8("Сноска про иммерсивность:"))
+    imgui.Spacing()
+    local feats = {
+        "Основная функция скрипта - реализована.",
+        "Всё, что привносят обновления, начиная с v1.2, это",
+        "лишь дополнительный функционал для иммерсивности.",
+        "Использовать его или нет - решает сам игрок.",
+    }
+    for _, f in ipairs(feats) do
+        imgui.TextColored(C.accent, u8("> "))
+        imgui.SameLine()
+        imgui.TextColored(C.textMain, u8(f))
+    end
+	
+    imgui.Spacing()
+    imgui.Separator()
+    imgui.Spacing()
+    imgui.TextColored(C.textDim, u8("Файл с настройками:  " .. ESO_SETTINGS_FILE))
+    imgui.TextColored(C.textDim, u8("Файл с личным делом:   " .. ESO_OFFICER_FILE))
+end
+
+
+-- ¦          ДИСПЕТЧЕР ПРИЛОЖЕНИЙ (роутер)                  ¦
+
+local function mdcOsRenderApp(appId)
+    if appId == "home"  then mdcRenderHome()  return end
+    if appId == "about" then mdcRenderAbout() return end
+    -- if appId == "cad"   then mdcRenderCAD()   return end
+    -- if appId == "veh"   then mdcRenderVEH()   return end
+    -- if appId == "fto"   then mdcRenderFTO()   return end
+    -- if appId == "penal" then mdcRenderPenal() return end
+    -- Placeholder для новых приложений
+    imgui.Spacing()
+    imgui.TextColored(MDC_COL.textDim, "  [Приложение не реализовано: " .. tostring(appId) .. "]")
+end
+
+
+-- ¦                  MDC OS UI (imgui frame)                ¦
+
+local mdcOsUI = imgui.OnFrame(
+    function() return mdcOsOpen or mdcOsAlpha > 0.01 end,
+    function()
+        if myHudFont == nil then return end
+
+        if mdcOsOpen then
+            if mdcOsAlpha < 1.0 then mdcOsAlpha = mdcOsAlpha + 0.07 end
+            if mdcOsAlpha > 1.0 then mdcOsAlpha = 1.0 end
+        else
+            if mdcOsAlpha > 0.0 then mdcOsAlpha = mdcOsAlpha - 0.07 end
+            if mdcOsAlpha < 0.0 then mdcOsAlpha = 0.0 end
+            if mdcOsAlpha <= 0.0 then return end
+        end
+
+        local C   = MDC_COL
+        local io_ = imgui.GetIO()
+        local sw, sh = io_.DisplaySize.x, io_.DisplaySize.y
+
+        local wx = esoSettings.mdcOsWindowX >= 0 and esoSettings.mdcOsWindowX or (sw * 0.5 - MDC_OS_W * 0.5)
+        local wy = esoSettings.mdcOsWindowY >= 0 and esoSettings.mdcOsWindowY or (sh * 0.5 - MDC_OS_H * 0.5)
+
+        imgui.PushStyleVarFloat(imgui.StyleVar.Alpha,           mdcOsAlpha)
+        imgui.PushStyleVarFloat(imgui.StyleVar.WindowRounding,  6.0)
+        imgui.PushStyleVarVec2 (imgui.StyleVar.WindowPadding,   imgui.ImVec2(0, 0))
+        imgui.PushStyleVarFloat(imgui.StyleVar.WindowBorderSize, 1.2)
+        imgui.PushStyleColor(imgui.Col.WindowBg, C.bg)
+        imgui.PushStyleColor(imgui.Col.Border,   imgui.ImVec4(0.18, 0.22, 0.32, 0.90))
+
+        imgui.SetNextWindowPos(imgui.ImVec2(wx, wy), imgui.Cond.FirstUseEver)
+        imgui.SetNextWindowSize(imgui.ImVec2(MDC_OS_W, MDC_OS_H), imgui.Cond.Always)
+
+        local wFlags = imgui.WindowFlags.NoTitleBar
+                     + imgui.WindowFlags.NoResize
+                     + imgui.WindowFlags.NoScrollbar
+                     + imgui.WindowFlags.NoScrollWithMouse
+
+        if imgui.Begin("MDC_OS_MAIN", nil, wFlags) then
+            imgui.PushFont(myHudFont)
+
+            local dl = imgui.GetWindowDrawList()
+            local wp = imgui.GetWindowPos()
+            local ws = imgui.GetWindowSize()
+
+            if wp.x ~= esoSettings.mdcOsWindowX or wp.y ~= esoSettings.mdcOsWindowY then
+                esoSettings.mdcOsWindowX = wp.x
+                esoSettings.mdcOsWindowY = wp.y
+            end
+
+            local HEADER_H = 28
+            local TASKBAR_H= 24
+            local SIDEBAR_W= 110
+
+            dl:AddRectFilled(
+                imgui.ImVec2(wp.x, wp.y),
+                imgui.ImVec2(wp.x + ws.x, wp.y + HEADER_H),
+                mdcCol(C.header))
+            dl:AddLine(
+                imgui.ImVec2(wp.x, wp.y + HEADER_H),
+                imgui.ImVec2(wp.x + ws.x, wp.y + HEADER_H),
+                mdcCol(C.accent), 1.0)
+
+            imgui.SetCursorPos(imgui.ImVec2(14, 8))
+            imgui.TextColored(C.headerText, u8("ESO  //  МОБИЛЬНЫЙ ТЕРМИНАЛ ДАННЫХ"))
+
+            imgui.SameLine(ws.x - 30)
+            imgui.PushStyleColor(imgui.Col.Button,        imgui.ImVec4(0,0,0,0))
+            imgui.PushStyleColor(imgui.Col.ButtonHovered, C.closeBtn)
+            imgui.PushStyleColor(imgui.Col.ButtonActive,  C.closeBtnHov)
+            imgui.PushStyleColor(imgui.Col.Text,          imgui.ImVec4(0.65, 0.30, 0.30, 1.0))
+            if imgui.Button("X##mdcos_close", imgui.ImVec2(22, 18)) then
+                mdcOsOpen = false
+                esoSettings.mdcOsLastApp = mdcOsActiveApp or "home"
+                settingsSave()
+                local hRaw = readMemory(0xB6F258, 4, false)
+                local vRaw = readMemory(0xB6F250, 4, false)
+                showCursor(false)
+                writeMemory(0xB6F258, 4, hRaw, false)
+                writeMemory(0xB6F250, 4, vRaw, false)
+            end
+            imgui.PopStyleColor(4)
+
+            dl:AddRectFilled(
+                imgui.ImVec2(wp.x, wp.y + HEADER_H),
+                imgui.ImVec2(wp.x + SIDEBAR_W, wp.y + ws.y - TASKBAR_H),
+                mdcCol(C.sidebar))
+            dl:AddLine(
+                imgui.ImVec2(wp.x + SIDEBAR_W, wp.y + HEADER_H),
+                imgui.ImVec2(wp.x + SIDEBAR_W, wp.y + ws.y - TASKBAR_H),
+                mdcCol(C.sep), 1.0)
+
+            local ICON_W = SIDEBAR_W - 16
+            local ICON_H = 54
+            local iconStartY = HEADER_H + 10
+
+            for i, app in ipairs(MDC_APPS) do
+                local isActive = (mdcOsActiveApp == app.id)
+                local iy = iconStartY + (i - 1) * (ICON_H + 8)
+
+                local ibgColor = isActive and C.iconBgSel or C.iconBg
+                local ibgRect0 = imgui.ImVec2(wp.x + 8, wp.y + iy)
+                local ibgRect1 = imgui.ImVec2(wp.x + 8 + ICON_W, wp.y + iy + ICON_H)
+
+                dl:AddRectFilled(ibgRect0, ibgRect1, mdcCol(ibgColor), 5.0)
+                if isActive then
+                    dl:AddRect(ibgRect0, ibgRect1, mdcCol(C.accent), 5.0, 0, 1.2)
+                end
+
+                local iconTextW = imgui.CalcTextSize(app.icon).x
+                imgui.SetCursorPos(imgui.ImVec2(8 + (ICON_W - iconTextW) * 0.5, iy + 8))
+                imgui.TextColored(isActive and C.accent or C.textDim, app.icon)
+
+                local lblW = imgui.CalcTextSize(app.label).x
+                imgui.SetCursorPos(imgui.ImVec2(8 + (ICON_W - lblW) * 0.5, iy + 26))
+                imgui.TextColored(isActive and C.textMain or C.textDim, app.label)
+
+                imgui.SetCursorPos(imgui.ImVec2(8, iy))
+                imgui.PushStyleColor(imgui.Col.Button, imgui.ImVec4(0,0,0,0))
+                imgui.PushStyleColor(imgui.Col.ButtonHovered, imgui.ImVec4(1,1,1,0.05))
+                imgui.PushStyleColor(imgui.Col.ButtonActive,  imgui.ImVec4(1,1,1,0.10))
+                if imgui.Button("##icon_" .. app.id, imgui.ImVec2(ICON_W, ICON_H)) then
+                    mdcOsActiveApp = app.id
+                    esoSettings.mdcOsLastApp = app.id
+                end
+                imgui.PopStyleColor(3)
+            end
+
+            local appAreaX = SIDEBAR_W
+            local appAreaY = HEADER_H
+            local appAreaW = ws.x - SIDEBAR_W
+            local appAreaH = ws.y - HEADER_H - TASKBAR_H
+
+            dl:AddRectFilled(
+                imgui.ImVec2(wp.x + appAreaX, wp.y + appAreaY),
+                imgui.ImVec2(wp.x + appAreaX + appAreaW, wp.y + appAreaY + appAreaH),
+                mdcCol(C.appBg))
+
+            local appTitle = "—"
+            for _, a in ipairs(MDC_APPS) do
+                if a.id == mdcOsActiveApp then appTitle = a.label; break end
+            end
+            local appSubHeaderH = 22
+            dl:AddRectFilled(
+                imgui.ImVec2(wp.x + appAreaX, wp.y + appAreaY),
+                imgui.ImVec2(wp.x + appAreaX + appAreaW, wp.y + appAreaY + appSubHeaderH),
+                mdcCol(imgui.ImVec4(0.08, 0.09, 0.13, 1.0)))
+            dl:AddLine(
+                imgui.ImVec2(wp.x + appAreaX, wp.y + appAreaY + appSubHeaderH),
+                imgui.ImVec2(wp.x + ws.x, wp.y + appAreaY + appSubHeaderH),
+                mdcCol(C.sep), 1.0)
+
+            imgui.SetCursorPos(imgui.ImVec2(appAreaX + 10, appAreaY + 5))
+            imgui.TextColored(C.textDim, appTitle)
+
+            local contentPad = 10
+            imgui.SetCursorPos(imgui.ImVec2(
+                appAreaX + contentPad,
+                appAreaY + appSubHeaderH + contentPad
+            ))
+            local childW = appAreaW - contentPad * 2
+            local childH = appAreaH - appSubHeaderH - contentPad * 2
+
+            if imgui.BeginChild("##mdc_app_content", imgui.ImVec2(childW, childH), false) then
+                if mdcOsActiveApp then
+                    mdcOsRenderApp(mdcOsActiveApp)
+                else
+                    imgui.Dummy(imgui.ImVec2(0, childH * 0.3))
+                    local hint = u8("Выберите приложение в панели слева")
+                    local hw   = imgui.CalcTextSize(hint).x
+                    imgui.SetCursorPosX((childW - hw) * 0.5)
+                    imgui.TextColored(C.textDim, hint)
+                end
+                imgui.EndChild()
+            end
+
+            local tbY = ws.y - TASKBAR_H
+            dl:AddRectFilled(
+                imgui.ImVec2(wp.x, wp.y + tbY),
+                imgui.ImVec2(wp.x + ws.x, wp.y + ws.y),
+                mdcCol(C.taskbar))
+            dl:AddLine(
+                imgui.ImVec2(wp.x, wp.y + tbY),
+                imgui.ImVec2(wp.x + ws.x, wp.y + tbY),
+                mdcCol(C.accent), 1.0)
+
+            imgui.SetCursorPos(imgui.ImVec2(4, tbY + 4))
+            imgui.PushStyleColor(imgui.Col.Button, C.accentDim)
+            imgui.PushStyleColor(imgui.Col.ButtonHovered, C.iconBgSel)
+            if imgui.Button(" Desktop ", imgui.ImVec2(0, 16)) then
+                mdcOsActiveApp = nil
+            end
+            imgui.PopStyleColor(2)
+
+            if mdcOsActiveApp then
+                imgui.SameLine(90)
+                imgui.PushStyleColor(imgui.Col.Button, imgui.ImVec4(0.12, 0.18, 0.30, 0.80))
+                imgui.Button("  " .. appTitle .. "  ##tb_app", imgui.ImVec2(0, 16))
+                imgui.PopStyleColor()
+            end
+
+            mdcOsTaskbarTime = os.date("%H:%M")
+            local timeW = imgui.CalcTextSize(mdcOsTaskbarTime).x
+            imgui.SetCursorPos(imgui.ImVec2(ws.x - timeW - 10, tbY + 5))
+            imgui.TextColored(C.taskbarText, mdcOsTaskbarTime)
+
+            imgui.PopFont()
+            imgui.End()
+        end
+
+        imgui.PopStyleColor(2)
+        imgui.PopStyleVar(4)
+    end
+)
+mdcOsUI.LockPlayer = false
+mdcOsUI.HideCursor = false
+
+
+-- ¦            MDC OS: хоткей и команда /mdc                ¦
+
+-- Хоткей Alt+M (только в полицейской машине)
+lua_thread.create(function()
+    while true do
+        wait(0)
+
+        if isKeyDown(VK_LMENU) and isKeyJustPressed(0x4D) -- M
+            and not sampIsChatInputActive()
+            and not isSampfuncsConsoleActive()
+            and isInServiceVehicle(PLAYER_PED)
+        then
+            mdcOsOpen = not mdcOsOpen
+            if mdcOsOpen then
+                mdcOsActiveApp = esoSettings.mdcOsLastApp or "home"
+                showCursor(true)
+            else
+                esoSettings.mdcOsLastApp = mdcOsActiveApp or "home"
+                settingsSave()
+                local hRaw = readMemory(0xB6F258, 4, false)
+                local vRaw = readMemory(0xB6F250, 4, false)
+                showCursor(false)
+                writeMemory(0xB6F258, 4, hRaw, false)
+                writeMemory(0xB6F250, 4, vRaw, false)
+            end
+        end
+    end
+end)
+
+sampRegisterChatCommand("mdc", function()
+    if not isInServiceVehicle(PLAYER_PED) then
+        sampAddChatMessage("[ESO] MDC доступен только в служебном транспорте.", 0xFF6A00)
+        return
+    end
+    mdcOsOpen = not mdcOsOpen
+    if mdcOsOpen then
+        mdcOsActiveApp = esoSettings.mdcOsLastApp or "home"
+        showCursor(true)
+    else
+        esoSettings.mdcOsLastApp = mdcOsActiveApp or "home"
+        settingsSave()
+        local hRaw = readMemory(0xB6F258, 4, false)
+        local vRaw = readMemory(0xB6F250, 4, false)
+        showCursor(false)
+        writeMemory(0xB6F258, 4, hRaw, false)
+        writeMemory(0xB6F250, 4, vRaw, false)
+    end
+end)
 
 -- ==================== Проверка на сервер (имгуи) ====================
 
@@ -2376,7 +4578,7 @@ local esoHelpUI = imgui.OnFrame(
             imgui.Separator()
             imgui.Spacing()
 
-            local authorText = 'by Weisez~   |   v1.2 MDC extended p1'
+            local authorText = 'by Weisez~   |   v1.3 MDC extended p2'
             local authorW = imgui.CalcTextSize(authorText).x
             imgui.SetCursorPosX((ww - authorW) * 0.5)
             imgui.TextColored(imgui.ImVec4(0.30, 0.33, 0.38, 1.0), authorText)
@@ -2436,7 +4638,7 @@ local esoHelpUI = imgui.OnFrame(
                 end
 
                 imgui.TextColored(C_ACC, u8('Emergency Services Overhaul'))
-                imgui.TextColored(C_TXT, u8('  by Weisez~   |   v1 overhaul release'))
+                imgui.TextColored(C_TXT, u8('  by Weisez~   |   v1.3 MDC extended p2'))
                 imgui.Spacing()
                 imgui.Separator()
 
@@ -2451,6 +4653,7 @@ local esoHelpUI = imgui.OnFrame(
                 imgui.TextColored(C_TXT, u8('  > Каллсигны -- /vsign, маркировки юнитов'))
                 imgui.TextColored(C_TXT, u8('  > SITREP-алерты -- Коды, ситуации, вызов 911'))
                 imgui.TextColored(C_TXT, u8('  > Борткомпьютер -- Alt+B, опрос авто (LMB)'))
+				imgui.TextColored(C_TXT, u8('  > Мобильный терминал -- Alt+M, статистика и доклады'))
 
                 asection(u8('СПРАВКА'))
                 imgui.TextColored(C_TXT, u8('  Навигация по вкладкам: КОМАНДЫ / ОСОБЕННОСТИ /'))
@@ -2480,7 +4683,7 @@ local esoHelpUI = imgui.OnFrame(
 
                 section(u8'ЮНИТЫ & РАЦИЯ')
                 row('/setunit [unit]',  u8('Установить юнит для рации (напр.: 3A19)'))
-                row(u8'Важно:',         u8('Юнит устанавливается сам при посадке в авто.'))
+                -- row(u8'Важно:',         u8('Юнит устанавливается сам при посадке в авто.'))
                 row('/rr [msg]',        u8('Отправить /r с префиксом юнита'))
                 row('/ff [msg]',        u8('Отправить /f с префиксом юнита'))
 
@@ -2499,6 +4702,7 @@ local esoHelpUI = imgui.OnFrame(
                 row('[LMB]',    u8('Опросить машину под курсором'))
                 row('[-]',      u8('Опросить машину перед своей машиной (быстрый скан)'))
                 row('[DEL]',    u8('Закрыть БК'))
+				row('[Alt+M]',  u8('Открыть MDC (/mdc)'))
                 section(u8'Помощь')
                 row('/esohelp', u8('Открыть / закрыть эту справку'))
 
@@ -2542,6 +4746,7 @@ local esoHelpUI = imgui.OnFrame(
                 feat(u8('[ЛКМ]: опрос модели, номера, скорости, маркировки и принадлежности авто'))
                 feat(u8('[-]: быстрый опрос впередистоящего транспорта'))
                 feat(u8('[DEL]: принудительное закрытие борткомпьютера'))
+				feat(u8('[Alt+M]: открыть MDC, позволяет смотреть и дополнять статистику'))
 
             elseif esoHelpTab == 4 then
                 local C_DIM  = imgui.ImVec4(0.28, 0.30, 0.34, 1.0)
